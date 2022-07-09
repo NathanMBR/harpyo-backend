@@ -15,6 +15,7 @@
     "build:compile": "babel src --extensions .ts --out-dir build --source-maps --copy-files --no-copy-ignored",
     "start": "node --enable-source-maps .",
     "start:dev": "node -r dotenv/config --enable-source-maps .",
+    "start:docker": "yarn prisma generate && yarn prisma migrate deploy && yarn build && yarn start:dev",
     "qs": "yarn build && yarn start:dev"
   },
   "dependencies": {
