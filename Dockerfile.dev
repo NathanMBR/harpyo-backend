@@ -1,4 +1,4 @@
-FROM node:16.14.0-alpine3.15
+FROM node:16.16.0-alpine3.15
 LABEL maintainer "Nathan Murillo <nathanmurillodeoliveira@gmail.com>"
 WORKDIR /usr/app
 COPY . ./
