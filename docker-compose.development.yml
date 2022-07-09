@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:14.2-alpine3.15
+    restart: 'no'
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "5432", "-U", "admin", "-d", "harpyo"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+    environment:
+      - POSTGRES_DB=harpyo
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - 5432:5432
+
+  smtp:
+    image: msztolcman/sendria:v2.2.2.0
+    restart: 'no'
+    ports:
+      - 1025:1025
+      - 1080:1080
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    restart: 'no'
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgresql://admin:admin@database:5432/harpyo?schema=public
+      - TEST_DATABASE_URL=postgresql://admin:admin@database:5432/harpyo-test?schema=
+      - SECRET=docker-secret
+      - LOGGING_FORMAT=dev
+      - PRISMA_HIDE_UPDATE_MESSAGE=true
+      - SMTP_HOST=smtp
+      - SMTP_PORT=1025
+      - SMTP_USER=undefined
+      - SMTP_PASS=undefined
+      - CONFIRM_ACCOUNT_BASE_URL=https://harpyo.test/confirm-account
+    links:
+      - "database"
+    volumes:
+      - ./node_modules:/usr/app/node_modules
+      - ./prisma:/usr/app/prisma
+      - ./src:/usr/app/src
+      - ./test:/usr/app/test
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      database:
+        condition: service_healthy
+      smtp:
+        condition: service_started

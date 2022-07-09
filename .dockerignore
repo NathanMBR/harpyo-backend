@@ -1,0 +1,13 @@
+.git
+.github
+.husky
+.vscode
+build
+node_modules
+prisma
+private
+src
+test
+.env
+.example.env
+LICENSE
