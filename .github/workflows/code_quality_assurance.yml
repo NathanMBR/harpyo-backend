@@ -11,13 +11,42 @@ jobs:
   publish:
     name: Linting and testing
     runs-on: ubuntu-latest
-    container: node:16.16.0-alpine3.15
+    container: node:16.14.0-alpine3.15
+    services:
+      database:
+        image: postgres:14.2-alpine3.15
+        env:
+          POSTGRES_DB: test
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+      smtp:
+        image: msztolcman/sendria:v2.2.2.0
+        ports:
+          - 1025:1025
+          - 1080:1080
+
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v3
-      - name: Install packages
+      - name: Install node packages
         run: yarn install --ignore-scripts
       - name: Ensure linting quality
         run: yarn lint
       - name: Ensure testing quality
         run: yarn test --passWithNoTests
+        env:
+          DATABASE_URL: postgresql://admin:admin@database:5432/test?schema=public
+          TEST_DATABASE_URL: postgresql://admin:admin@database:5432/test?schema=
+          SECRET: easySecretToRunTests
+          PRISMA_HIDE_UPDATE_MESSAGE: true
+          SMTP_HOST: smtp
+          SMTP_PORT: 1025
+          SMTP_USER: null
+          SMTP_PASS: null
+          CONFIRM_ACCOUNT_BASE_URL: https://harpyo.test/confirm-account
