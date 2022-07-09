@@ -9,3 +9,98 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+
+  name     String @db.VarChar(255)
+  email    String @db.VarChar(255)
+  password String @db.VarChar(255)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  emailConfirmations EmailConfirmation[]
+  passwordResets     PasswordReset[]
+  folders            Folder[]
+  documents          Document[]
+
+  @@map("users")
+}
+
+model EmailConfirmation {
+  id Int @id @default(autoincrement())
+
+  userId          Int       @db.Integer
+  email           String    @db.VarChar(255)
+  token           String    @default(uuid())
+  lastRequestedAt DateTime  @default(now()) @db.Timestamptz()
+  confirmedAt     DateTime? @db.Timestamptz()
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("emailConfirmations")
+}
+
+model PasswordReset {
+  id Int @id @default(autoincrement())
+
+  userId          Int                @db.Integer
+  token           String             @default(uuid())
+  type            PasswordResetTypes
+  lastRequestedAt DateTime           @default(now()) @db.Timestamptz()
+  resetedAt       DateTime?          @db.Timestamptz()
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("passwordResets")
+}
+
+enum PasswordResetTypes {
+  changed
+  forgotten
+}
+
+model Folder {
+  id Int @id @default(autoincrement())
+
+  name   String @db.VarChar(255)
+  userId Int    @db.Integer
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  user      User       @relation(fields: [userId], references: [id])
+  documents Document[]
+
+  @@map("folders")
+}
+
+model Document {
+  id Int @id @default(autoincrement())
+
+  title       String  @db.VarChar(255)
+  text        String? @db.Text
+  folderId    Int?    @db.Integer
+  userId      Int     @db.Integer
+  isEncrypted Boolean @default(false) @db.Boolean
+
+  createdAt DateTime  @default(now()) @db.Timestamptz()
+  updatedAt DateTime  @updatedAt @db.Timestamptz()
+  deletedAt DateTime? @db.Timestamptz()
+
+  folder Folder? @relation(fields: [folderId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+
+  @@map("documents")
+}
