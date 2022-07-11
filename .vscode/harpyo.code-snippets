@@ -22,5 +22,112 @@
         "body": [
             "export const $1 = $2(process.env.$1);$0"
         ]
-    }
+    },
+    "Create repository contract": {
+        "description": "Creates a repository contract",
+        "prefix": "ctrc",
+        "scope": "typescript",
+        "body": [
+            "export namespace $TM_FILENAME_BASE {",
+            "    export interface Request {",
+            "        $1",
+            "    }",
+            "",
+            "    export interface Response {",
+            "        $2",
+            "    }",
+            "}",
+            "",
+            "export interface $TM_FILENAME_BASE {",
+            "    $3: (data: $TM_FILENAME_BASE.Request) => Promise<$TM_FILENAME_BASE.Response>",
+            "}$0"
+        ]
+    },
+    "Create repository": {
+        "description": "Creates a repository",
+        "prefix": "repo",
+        "scope": "typescript",
+        "body": [
+            "import { $2 } from \"@/repositories/$1\";",
+            "import { prisma } from \"@/database/prisma\";",
+            "",
+            "export class $TM_FILENAME_BASE implements $2 {",
+            "    async $3(data: $2.Request) {",
+            "        $0",
+            "    }",
+            "}"
+        ]
+    },
+    "Create resource": {
+        "description": "Creates a resource",
+        "prefix": "rsc",
+        "scope": "typescript",
+        "body": [
+            "import { z as zod } from \"zod\";",
+            "",
+            "import { $1 } from \"./schemas\";",
+            "import {",
+            "    $3",
+            "} from \"@/repositories/$2\";",
+            "import { $5 } from \"@/errors\";",
+            "",
+            "type $6 = zod.infer<typeof $1>;",
+            "",
+            "export class $TM_FILENAME_BASE {",
+            "    constructor(",
+            "        $4",
+            "    ) { }",
+            "",
+            "    async execute(dto: $6) {",
+            "        $0",
+            "    }",
+            "}"
+        ]
+    },
+    "Create controller": {
+        "description": "Creates a controller",
+        "prefix": "ctrl",
+        "scope": "typescript",
+        "body": [
+            "import {",
+            "    Request,",
+            "    Response",
+            "} from \"express\";",
+            "",
+            "import { GenericControllerContract } from \"../contracts\";",
+            "import { $2 } from \"@/resources/$1\";",
+            "import {",
+            "    $4",
+            "} from \"@/repositories/$3\";",
+            "",
+            "export class $TM_FILENAME_BASE implements GenericControllerContract {",
+            "    $5",
+            "",
+            "    async handle(request: Request, response: Response) {",
+            "        $0",
+            "    }",
+            "}"
+        ]
+    },
+    "Create route": {
+        "description": "Creates a route",
+        "prefix": "rtr",
+        "scope": "typescript",
+        "body": [
+            "import { Router } from \"express\";",
+            "",
+            "import {",
+            "    $2",
+            "} from \"@/controllers/$1\";",
+            "",
+            "const $3 = Router();",
+            "",
+            "$3.post(",
+            "    \"$4\",",
+            "    new $2().handle",
+            ");",
+            "",
+            "export { $3 };"
+        ]
+    },
 }
