@@ -1,8 +1,8 @@
 {
 	"src/**/*.{ts,js}": [
-		"npm run lint"
+		"yarn lint"
 	],
 	"test/**/*.{ts,js}": [
-		"npm run lint"
+		"yarn lint"
 	]
 }
