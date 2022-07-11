@@ -3,16 +3,9 @@ import {
     PORT,
     NODE_ENV
 } from "@/settings";
-
-/* eslint-disable no-console */
-const handleListening = () => {
-    console.log("Server online!");
-    console.log(`Port: ${PORT}`);
-    console.log(`Environment: ${NODE_ENV}`);
-};
-/* eslint-enable no-console */
+import { serverListeningHandler } from "@/handlers";
 
 app.listen(
     PORT,
-    handleListening
+    serverListeningHandler(PORT, NODE_ENV)
 );
