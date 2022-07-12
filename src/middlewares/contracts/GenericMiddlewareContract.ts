@@ -9,7 +9,7 @@ export namespace GenericMiddlewareContract {
         request: Request,
         response: Response,
         next: NextFunction
-    ) => Promise<Response | NextFunction>;
+    ) => Promise<Response | void>;
 }
 
 export interface GenericMiddlewareContract {
