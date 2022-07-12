@@ -17,5 +17,5 @@ export namespace CreateUserContract {
 }
 
 export interface CreateUserContract {
-    create: (data: CreateUserContract.Request) => Promise<CreateUserContract.Response>
+    create: (data: CreateUserContract.Request) => Promise<CreateUserContract.Response>;
 }

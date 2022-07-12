@@ -14,5 +14,5 @@ export namespace ReadOneUserByEmailContract {
 }
 
 export interface ReadOneUserByEmailContract {
-    readOneByEmail: (data: ReadOneUserByEmailContract.Request) => Promise<ReadOneUserByEmailContract.Response | null>
+    readOneByEmail: (data: ReadOneUserByEmailContract.Request) => Promise<ReadOneUserByEmailContract.Response | null>;
 }
