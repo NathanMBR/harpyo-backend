@@ -11,20 +11,20 @@ import {
 } from "@/repositories/user";
 
 export class CreateUserController implements GenericControllerContract {
-    private readonly readOneUserByEmailRepository = new PrismaReadOneUserByEmailRepository();
-    private readonly createUserRepository = new PrismaCreateUserRepository();
-
     async handle(request: Request, response: Response) {
+        const readOneUserByEmailRepository = new PrismaReadOneUserByEmailRepository();
+        const createUserRepository = new PrismaCreateUserRepository();
+
+        const createUserResource = new CreateUserResource(
+            readOneUserByEmailRepository,
+            createUserRepository
+        );
+
         const {
             name,
             email,
             password
         } = request.body;
-
-        const createUserResource = new CreateUserResource(
-            this.readOneUserByEmailRepository,
-            this.createUserRepository
-        );
 
         const user = await createUserResource.execute(
             {
