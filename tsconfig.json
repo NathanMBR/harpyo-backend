@@ -1,6 +1,12 @@
 {
-  "include": ["./src", "./test"],
-  "exclude": ["./node_modules", "./build"],
+  "include": [
+    "./src",
+    "./test"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./build"
+  ],
   "compilerOptions": {
     "target": "es2020",
     "experimentalDecorators": true,
@@ -8,8 +14,12 @@
     "moduleResolution": "node",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@test/*": ["./test/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@test/*": [
+        "./test/*"
+      ]
     },
     "rootDirs": [
       "./src",
