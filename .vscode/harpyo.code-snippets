@@ -99,12 +99,17 @@
             "import {",
             "    $4",
             "} from \"@/repositories/$3\";",
+            "import { controllerErrorHandler } from \"@/handlers\";",
             "",
             "export class $TM_FILENAME_BASE implements GenericControllerContract {",
             "    $5",
             "",
             "    async handle(request: Request, response: Response) {",
-            "        $0",
+            "        try {",
+            "            $0",
+            "        } catch (error) {",
+            "            return controllerErrorHandler(response, error);",
+            "        }",
             "    }",
             "}"
         ]
