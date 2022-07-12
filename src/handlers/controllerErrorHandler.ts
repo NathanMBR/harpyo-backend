@@ -1,11 +1,10 @@
-import { HttpError } from "@/errors";
-import { Request, Response, NextFunction } from "express";
+import { Response } from "express";
 
-export const errorHandler = (
-    error: unknown,
-    _request: Request,
+import { HttpError } from "@/errors";
+
+export const controllerErrorHandler = (
     response: Response,
-    _next: NextFunction
+    error: unknown
 ) => {
     if (error instanceof HttpError && error.statusCode !== 500)
         return response.status(error.statusCode).json(

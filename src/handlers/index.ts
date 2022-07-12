@@ -1,2 +1,2 @@
 export * from "./serverListeningHandler";
-export * from "./errorHandler";
+export * from "./controllerErrorHandler";
