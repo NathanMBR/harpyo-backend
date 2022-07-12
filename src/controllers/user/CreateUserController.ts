@@ -9,31 +9,36 @@ import {
     PrismaReadOneUserByEmailRepository,
     PrismaCreateUserRepository
 } from "@/repositories/user";
+import { controllerErrorHandler } from "@/handlers";
 
 export class CreateUserController implements GenericControllerContract {
     async handle(request: Request, response: Response) {
-        const readOneUserByEmailRepository = new PrismaReadOneUserByEmailRepository();
-        const createUserRepository = new PrismaCreateUserRepository();
+        try {
+            const readOneUserByEmailRepository = new PrismaReadOneUserByEmailRepository();
+            const createUserRepository = new PrismaCreateUserRepository();
 
-        const createUserResource = new CreateUserResource(
-            readOneUserByEmailRepository,
-            createUserRepository
-        );
+            const createUserResource = new CreateUserResource(
+                readOneUserByEmailRepository,
+                createUserRepository
+            );
 
-        const {
-            name,
-            email,
-            password
-        } = request.body;
-
-        const user = await createUserResource.execute(
-            {
+            const {
                 name,
                 email,
                 password
-            }
-        );
+            } = request.body;
 
-        return response.status(201).json(user);
+            const user = await createUserResource.execute(
+                {
+                    name,
+                    email,
+                    password
+                }
+            );
+
+            return response.status(201).json(user);
+        } catch (error) {
+            return controllerErrorHandler(response, error);
+        }
     }
 }
