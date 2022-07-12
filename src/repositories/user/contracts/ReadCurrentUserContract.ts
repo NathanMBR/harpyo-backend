@@ -14,6 +14,6 @@ export namespace ReadCurrentUserContract {
     }
 }
 
-export interface ReadCurrentUser {
-    readCurrent: (data: ReadCurrentUserContract.Request) => Promise<ReadCurrentUserContract.Response>;
+export interface ReadCurrentUserContract {
+    readCurrent: (data: ReadCurrentUserContract.Request) => Promise<ReadCurrentUserContract.Response | null>;
 }
