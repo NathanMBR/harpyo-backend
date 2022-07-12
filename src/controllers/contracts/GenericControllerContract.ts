@@ -8,5 +8,5 @@ export namespace GenericControllerContract {
 }
 
 export interface GenericControllerContract {
-    handle: GenericControllerContract.HandlerMethod
+    handle: GenericControllerContract.HandlerMethod;
 }
