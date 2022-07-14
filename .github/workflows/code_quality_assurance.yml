@@ -37,7 +37,7 @@ jobs:
       - name: Install node packages
         run: yarn install --ignore-scripts
       - name: Inject Prisma types
-        run: yarn prisma generate && yarn prisma migrate deploy
+        run: yarn prisma generate
       - name: Ensure linting quality
         run: yarn lint
       - name: Ensure testing quality
