@@ -9,8 +9,10 @@
   "scripts": {
     "postinstall": "husky install",
     "test": "jest --verbose --passWithNoTests --runInBand",
-    "build": "concurrently yarn:build:*",
+    "test:unitary": "yarn test --testPathPattern=test/unitary",
+    "test:integration": "yarn test --testPathPattern=test/integration",
     "lint": "eslint --fix",
+    "build": "concurrently yarn:build:*",
     "build:types": "tsc -p tsconfig.build.json",
     "build:compile": "babel src --extensions .ts --out-dir build --source-maps --copy-files --no-copy-ignored",
     "start": "node --enable-source-maps .",
