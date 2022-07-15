@@ -1,5 +1,10 @@
 import { Response } from "express";
 import { ZodError } from "zod";
+import {
+    TokenExpiredError,
+    JsonWebTokenError,
+    NotBeforeError
+} from "jsonwebtoken";
 
 import { HttpError } from "@/errors";
 
@@ -21,6 +26,30 @@ export const controllerErrorHandler = (
                 error: "Validation error",
                 statusCode: 400,
                 reasons: error.issues.map(issue => issue.message)
+            }
+        );
+
+    if (error instanceof TokenExpiredError)
+        return response.status(401).json(
+            {
+                error: "Your session has expired, please authenticate again",
+                statusCode: 401
+            }
+        );
+
+    if (error instanceof JsonWebTokenError)
+        return response.status(401).json(
+            {
+                error: "Invalid authentication token",
+                statusCode: 401
+            }
+        );
+
+    if (error instanceof NotBeforeError)
+        return response.status(401).json(
+            {
+                error: "This resource isn't available yet",
+                statusCode: 401
             }
         );
 
