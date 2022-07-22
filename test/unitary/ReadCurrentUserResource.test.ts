@@ -71,7 +71,7 @@ describe(
         );
 
         it(
-            "Should not read an deleted user",
+            "Should not read a deleted user",
             async () => {
                 await expect(
                     readCurrentUserResource.execute(
