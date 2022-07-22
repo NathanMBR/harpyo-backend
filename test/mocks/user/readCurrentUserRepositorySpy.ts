@@ -24,7 +24,10 @@ const mockedUsers: Array<ReadCurrentUserContract.Response> = [
 ];
 
 export const readCurrentUserRepositorySpy = jest.fn<ReadCurrentUserContract["readCurrent"]>(
-    async data => Promise.resolve(
-        mockedUsers[data.id] || null
-    )
+    async data => {
+        const userId = data.id - 1;
+        const user = mockedUsers[userId];
+
+        return user && !user.deletedAt ? user : null;
+    }
 );
