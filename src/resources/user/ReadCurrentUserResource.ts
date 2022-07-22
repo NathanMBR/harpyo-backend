@@ -4,7 +4,7 @@ import { readCurrentUserDTOSchema } from "./schemas";
 import {
     ReadCurrentUserContract
 } from "@/repositories/user";
-import { NotFoundError } from "@/errors";
+import { InternalServerError } from "@/errors";
 import { removePropertiesHelper } from "@/helpers";
 
 type ReadCurrentUserDTO = zod.infer<typeof readCurrentUserDTOSchema>;
@@ -23,7 +23,7 @@ export class ReadCurrentUserResource {
             }
         );
         if (!user)
-            throw new NotFoundError("User not found");
+            throw new InternalServerError("Authenticated as unknown user");
 
         const userWithoutUnsafeData = removePropertiesHelper(user, "password");
         return userWithoutUnsafeData;
