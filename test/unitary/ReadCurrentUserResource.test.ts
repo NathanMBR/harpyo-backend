@@ -7,7 +7,7 @@ import { ZodError } from "zod";
 
 import { ReadCurrentUserResource } from "@/resources/user";
 import { readCurrentUserRepositorySpy } from "@test/mocks/user";
-import { NotFoundError } from "@/errors";
+import { InternalServerError } from "@/errors";
 
 const readCurrentUserResource = new ReadCurrentUserResource(
     {
@@ -81,7 +81,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(NotFoundError);
+                    .toThrow(InternalServerError);
 
                 expect(readCurrentUserRepositorySpy).toHaveBeenCalledTimes(1);
             }
@@ -98,7 +98,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(NotFoundError);
+                    .toThrow(InternalServerError);
 
                 expect(readCurrentUserRepositorySpy).toHaveBeenCalledTimes(1);
             }
