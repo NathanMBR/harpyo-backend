@@ -6,15 +6,21 @@ import {
     ReadOneUserByEmailContract,
     CreateUserContract
 } from "@/repositories/user";
+import { SendWelcomeEmailContract } from "@/services/email";
 import { BadRequestError } from "@/errors";
 import { removePropertiesHelper } from "@/helpers";
+import {
+    SMTP_FROM,
+    HARPYO_BASE_URL
+} from "@/settings";
 
 type CreateUserDTO = zod.infer<typeof createUserDTOSchema>;
 
 export class CreateUserResource {
     constructor(
         private readonly readOneUserByEmailRepository: ReadOneUserByEmailContract,
-        private readonly createUserRepository: CreateUserContract
+        private readonly createUserRepository: CreateUserContract,
+        private readonly sendWelcomeEmailService: SendWelcomeEmailContract
     ) { }
 
     async execute(dto: CreateUserDTO) {
@@ -33,6 +39,22 @@ export class CreateUserResource {
 
         const user = await this.createUserRepository.create(userData);
         const userWithoutUnsafeData = removePropertiesHelper(user, "password");
+
+        await this.sendWelcomeEmailService.sendWelcomeEmail(
+            {
+                from: {
+                    name: "The Harpyo Team",
+                    email: SMTP_FROM
+                },
+
+                to: {
+                    name: user.name,
+                    email: user.email
+                },
+
+                confirmAccountURL: `${HARPYO_BASE_URL}/confirm-account/${user.emailConfirmation.token}`
+            }
+        );
 
         return userWithoutUnsafeData;
     }
