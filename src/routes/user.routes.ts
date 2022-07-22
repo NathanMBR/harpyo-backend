@@ -2,12 +2,13 @@ import { Router } from "express";
 
 import {
     CreateUserController,
-    ReadCurrentUserController
+    ReadCurrentUserController,
+    UpdateCurrentUserController
 } from "@/controllers/user";
-
 import { AuthenticationMiddleware } from "@/middlewares";
 
 const userRouter = Router();
+const authenticationMiddleware = new AuthenticationMiddleware().handle;
 
 userRouter.post(
     "/user/create",
@@ -16,8 +17,14 @@ userRouter.post(
 
 userRouter.get(
     "/user/get",
-    new AuthenticationMiddleware().handle,
+    authenticationMiddleware,
     new ReadCurrentUserController().handle
+);
+
+userRouter.put(
+    "/user/update",
+    authenticationMiddleware,
+    new UpdateCurrentUserController().handle
 );
 
 export { userRouter };
