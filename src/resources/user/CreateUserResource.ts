@@ -40,7 +40,7 @@ export class CreateUserResource {
         const user = await this.createUserRepository.create(userData);
         const userWithoutUnsafeData = removePropertiesHelper(user, "password");
 
-        await this.sendWelcomeEmailService.sendWelcomeEmail(
+        await this.sendWelcomeEmailService.send(
             {
                 from: {
                     name: "The Harpyo Team",

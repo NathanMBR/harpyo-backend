@@ -15,5 +15,5 @@ export namespace SendWelcomeEmailContract {
 }
 
 export interface SendWelcomeEmailContract {
-    sendWelcomeEmail: (data: SendWelcomeEmailContract.Request) => Promise<SendWelcomeEmailContract.Response>;
+    send: (data: SendWelcomeEmailContract.Request) => Promise<SendWelcomeEmailContract.Response>;
 }

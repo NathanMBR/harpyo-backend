@@ -6,7 +6,7 @@ import { nodemailerTransport } from "@/settings";
 import { removeHTMLTagsHelper } from "@/helpers";
 
 export class NodeMailerSendWelcomeEmailService implements SendWelcomeEmailContract {
-    async sendWelcomeEmail(data: SendWelcomeEmailContract.Request) {
+    async send(data: SendWelcomeEmailContract.Request) {
         const welcomeEmailTemplatePath = path.resolve(
             __dirname,
             "..",
