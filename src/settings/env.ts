@@ -1,7 +1,7 @@
 export const NODE_ENV = String(process.env.NODE_ENV);
 export const PORT = Number(process.env.PORT);
 export const SECRET = String(process.env.SECRET);
-export const CONFIRM_ACCOUNT_BASE_URL = String(process.env.CONFIRM_ACCOUNT_BASE_URL);
+export const HARPYO_BASE_URL = String(process.env.HARPYO_BASE_URL);
 
 export const SMTP_HOST = String(process.env.SMTP_HOST);
 export const SMTP_PORT = Number(process.env.SMTP_PORT);

@@ -40,7 +40,7 @@ services:
       - SMTP_PORT=1025
       - SMTP_USER=undefined
       - SMTP_PASS=undefined
-      - CONFIRM_ACCOUNT_BASE_URL=https://harpyo.test/confirm-account
+      - HARPYO_BASE_URL=https://harpyo.test
     links:
       - "database"
     volumes:
