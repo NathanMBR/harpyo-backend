@@ -15,10 +15,26 @@ export class PrismaCreateUserRepository implements CreateUserContract {
                             confirmedAt: null
                         }
                     }
+                },
+
+                include: {
+                    emailConfirmations: true
                 }
             }
         );
 
-        return user;
+        const response = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            deletedAt: user.deletedAt,
+
+            emailConfirmation: user.emailConfirmations[0]
+        };
+
+        return response;
     }
 }
