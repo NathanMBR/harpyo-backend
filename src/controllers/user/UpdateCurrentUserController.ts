@@ -23,10 +23,11 @@ export class UpdateCurrentUserController implements GenericControllerContract {
                 updateCurrentUserRepository
             );
 
-            if (!request.user)
-                throw new InternalServerError("Access without authentication is denied");
+            const authenticationData = request.user;
+            if (!authenticationData)
+                throw new InternalServerError("You must be authenticated to access this page");
 
-            const id = request.user.sub;
+            const id = authenticationData.sub;
             const { name } = request.body;
 
             const user = await updateCurrentUserResource.execute(
