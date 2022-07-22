@@ -11,7 +11,19 @@ export const createUserRepositorySpy = jest.fn<CreateUserContract["create"]>(
             password: "password",
             createdAt: new Date(),
             updatedAt: new Date(),
-            deletedAt: null
+            deletedAt: null,
+
+            emailConfirmation: {
+                id: 1,
+                userId: 1,
+                email: data.email,
+                token: "token",
+                lastRequestedAt: new Date(),
+                confirmedAt: null,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                deletedAt: null
+            }
         }
     )
 );
