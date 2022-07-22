@@ -39,7 +39,7 @@
             "}",
             "",
             "export interface $TM_FILENAME_BASE {",
-            "    $3: (data: $TM_FILENAME_BASE.Request) => Promise<$TM_FILENAME_BASE.Response>",
+            "    $3: (data: $TM_FILENAME_BASE.Request) => Promise<$TM_FILENAME_BASE.Response>;",
             "}$0"
         ]
     },
