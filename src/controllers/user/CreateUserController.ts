@@ -9,6 +9,7 @@ import {
     PrismaReadOneUserByEmailRepository,
     PrismaCreateUserRepository
 } from "@/repositories/user";
+import { NodeMailerSendWelcomeEmailService } from "@/services/email";
 import { controllerErrorHandler } from "@/handlers";
 
 export class CreateUserController implements GenericControllerContract {
@@ -16,10 +17,12 @@ export class CreateUserController implements GenericControllerContract {
         try {
             const readOneUserByEmailRepository = new PrismaReadOneUserByEmailRepository();
             const createUserRepository = new PrismaCreateUserRepository();
+            const sendWelcomeEmailService = new NodeMailerSendWelcomeEmailService();
 
             const createUserResource = new CreateUserResource(
                 readOneUserByEmailRepository,
-                createUserRepository
+                createUserRepository,
+                sendWelcomeEmailService
             );
 
             const {
