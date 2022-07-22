@@ -5,7 +5,17 @@ export class PrismaCreateUserRepository implements CreateUserContract {
     async create(data: CreateUserContract.Request) {
         const user = await prisma.user.create(
             {
-                data
+                data: {
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                    emailConfirmations: {
+                        create: {
+                            email: data.email,
+                            confirmedAt: null
+                        }
+                    }
+                }
             }
         );
 
