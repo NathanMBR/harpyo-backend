@@ -8,7 +8,8 @@ import { ZodError } from "zod";
 import { CreateUserResource } from "@/resources/user";
 import {
     readOneUserByEmailRepositorySpy,
-    createUserRepositorySpy
+    createUserRepositorySpy,
+    sendWelcomeEmailServiceSpy
 } from "@test/mocks/user";
 import { BadRequestError } from "@/errors";
 
@@ -18,6 +19,9 @@ const createUserResource = new CreateUserResource(
     },
     {
         create: createUserRepositorySpy
+    },
+    {
+        send: sendWelcomeEmailServiceSpy
     }
 );
 
