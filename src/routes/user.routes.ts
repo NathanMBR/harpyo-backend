@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
     CreateUserController,
     ReadCurrentUserController,
-    UpdateCurrentUserController
+    UpdateCurrentUserController,
+    InactivateCurrentUserController
 } from "@/controllers/user";
 import { AuthenticationMiddleware } from "@/middlewares";
 
@@ -25,6 +26,12 @@ userRouter.put(
     "/user/update",
     authenticationMiddleware,
     new UpdateCurrentUserController().handle
+);
+
+userRouter.delete(
+    "/user/delete",
+    authenticationMiddleware,
+    new InactivateCurrentUserController().handle
 );
 
 export { userRouter };
