@@ -38,8 +38,6 @@ export class CreateUserResource {
         userData.password = hashedPassword;
 
         const user = await this.createUserRepository.create(userData);
-        const userWithoutUnsafeData = removePropertiesHelper(user, "password");
-
         await this.sendWelcomeEmailService.send(
             {
                 from: {
@@ -56,6 +54,15 @@ export class CreateUserResource {
             }
         );
 
-        return userWithoutUnsafeData;
+        const unsafeProperties: Array<keyof typeof user> = [
+            "password",
+            "emailConfirmation"
+        ];
+        const userWithoutUnsafeProperties = removePropertiesHelper(
+            user,
+            ...unsafeProperties
+        );
+
+        return userWithoutUnsafeProperties;
     }
 }
