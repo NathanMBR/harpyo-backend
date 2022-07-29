@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const dotenv = require("dotenv");
-const NodeEnvironment = require("jest-environment-node");
+const NodeEnvironment = require("jest-environment-node").default;
 const { execSync } = require("child_process");
 const { Client } = require("pg");
 
