@@ -3,7 +3,6 @@ interface EmailConfirmation {
     userId: number;
     email: string;
     token: string;
-    lastRequestedAt: Date;
     confirmedAt: Date | null;
     createdAt: Date;
     updatedAt: Date;
