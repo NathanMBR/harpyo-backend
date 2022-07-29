@@ -32,11 +32,10 @@ model User {
 model EmailConfirmation {
   id Int @id @default(autoincrement())
 
-  userId          Int       @db.Integer
-  email           String    @db.VarChar(255)
-  token           String    @default(uuid())
-  lastRequestedAt DateTime  @default(now()) @db.Timestamptz()
-  confirmedAt     DateTime? @db.Timestamptz()
+  userId      Int       @db.Integer
+  email       String    @db.VarChar(255)
+  token       String    @default(uuid())
+  confirmedAt DateTime? @db.Timestamptz()
 
   createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @updatedAt @db.Timestamptz()
@@ -50,11 +49,10 @@ model EmailConfirmation {
 model PasswordReset {
   id Int @id @default(autoincrement())
 
-  userId          Int                @db.Integer
-  token           String             @default(uuid())
-  type            PasswordResetTypes
-  lastRequestedAt DateTime           @default(now()) @db.Timestamptz()
-  resetedAt       DateTime?          @db.Timestamptz()
+  userId    Int                @db.Integer
+  token     String             @default(uuid())
+  type      PasswordResetTypes
+  resetedAt DateTime?          @db.Timestamptz()
 
   createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @updatedAt @db.Timestamptz()
