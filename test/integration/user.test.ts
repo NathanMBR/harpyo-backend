@@ -134,5 +134,31 @@ describe(
                 expect(typeof response.body.token).toBe("string");
             }
         );
+
+        it(
+            "Should successfully update the current user",
+            async () => {
+                const userToUpdate = {
+                    name: "Updated Test User",
+                    email: "updated.user@test.com"
+                };
+
+                const response = await request
+                    .put(`${baseURL}/user/update`)
+                    .send(userToUpdate);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id");
+                expect(response.body).toHaveProperty("name", userToUpdate.name);
+                expect(response.body).toHaveProperty("email", "user@test.com");
+                expect(response.body.email).not.toBe(userToUpdate.email);
+                expect(response.body).not.toHaveProperty("password");
+                expect(response.body).not.toHaveProperty("emailConfirmation");
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body.createdAt).not.toBe(response.body.updatedAt);
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
     }
 );
