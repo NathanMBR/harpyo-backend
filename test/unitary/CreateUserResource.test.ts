@@ -90,7 +90,7 @@ describe(
         );
 
         it(
-            "Should not create an user with an email that's in a bad format",
+            "Should not create an user with an invalid email",
             async () => {
                 await expect(
                     createUserResource.execute(
