@@ -6,6 +6,7 @@ import {
     UpdateCurrentUserContract
 } from "@/repositories/user";
 import { InternalServerError } from "@/errors";
+import { removePropertiesHelper } from "@/helpers";
 
 type UpdateCurrentUserDTO = zod.infer<typeof updateCurrentUserDTOSchema>;
 
@@ -26,7 +27,12 @@ export class UpdateCurrentUserResource {
         if (!doesUserExist)
             throw new InternalServerError("Authenticated as unknown user");
 
-        const user = await this.updateCurrentUserRepository.updateCurrent(userData);
+        const unsafeUser = await this.updateCurrentUserRepository.updateCurrent(userData);
+        const user = removePropertiesHelper(
+            unsafeUser,
+            "password"
+        );
+
         return user;
     }
 }
