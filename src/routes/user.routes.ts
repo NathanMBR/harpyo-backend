@@ -4,7 +4,8 @@ import {
     CreateUserController,
     ReadCurrentUserController,
     UpdateCurrentUserController,
-    InactivateCurrentUserController
+    InactivateCurrentUserController,
+    AuthenticateUserController
 } from "@/controllers/user";
 import { AuthenticationMiddleware } from "@/middlewares";
 
@@ -32,6 +33,11 @@ userRouter.delete(
     "/user/delete",
     authenticationMiddleware,
     new InactivateCurrentUserController().handle
+);
+
+userRouter.post(
+    "/user/authenticate",
+    new AuthenticateUserController().handle
 );
 
 export { userRouter };
