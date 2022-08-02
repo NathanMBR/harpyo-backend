@@ -7,7 +7,7 @@ export const readOneUserByEmailRepositorySpy = jest.fn<ReadOneUserByEmailContrac
     async data => {
         const hashedPassword = await hash(
             "already-existent-password",
-            10
+            16
         );
 
         return Promise.resolve(
