@@ -25,19 +25,28 @@ export class CreateUserResource {
 
     async execute(dto: CreateUserDTO) {
         const userData = createUserDTOSchema.parse(dto);
+        const {
+            name,
+            email,
+            password
+        } = userData;
 
         const doesEmailAlreadyExists = await this.readOneUserByEmailRepository.readOneByEmail(
             {
-                email: dto.email
+                email
             }
         );
         if (doesEmailAlreadyExists)
             throw new BadRequestError("Your e-mail is already in use");
 
-        const hashedPassword = await hash(userData.password, 16);
-        userData.password = hashedPassword;
-
-        const user = await this.createUserRepository.create(userData);
+        const hashedPassword = await hash(password, 16);
+        const unsafeUser = await this.createUserRepository.create(
+            {
+                name,
+                email,
+                password: hashedPassword
+            }
+        );
         await this.sendWelcomeEmailService.send(
             {
                 from: {
@@ -46,23 +55,23 @@ export class CreateUserResource {
                 },
 
                 to: {
-                    name: user.name,
-                    email: user.email
+                    name,
+                    email
                 },
 
-                confirmAccountURL: `${HARPYO_BASE_URL}/confirm-account/${user.emailConfirmation.token}`
+                confirmAccountURL: `${HARPYO_BASE_URL}/confirm-account/${unsafeUser.emailConfirmation.token}`
             }
         );
 
-        const unsafeProperties: Array<keyof typeof user> = [
+        const unsafeProperties: Array<keyof typeof unsafeUser> = [
             "password",
             "emailConfirmation"
         ];
-        const userWithoutUnsafeProperties = removePropertiesHelper(
-            user,
+        const user = removePropertiesHelper(
+            unsafeUser,
             ...unsafeProperties
         );
 
-        return userWithoutUnsafeProperties;
+        return user;
     }
 }
