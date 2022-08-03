@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "husky install",
-    "test": "jest --verbose --passWithNoTests --runInBand --testTimeout=10000",
+    "test": "jest --verbose --passWithNoTests --runInBand --testTimeout=120000",
     "test:unitary": "yarn test --testPathPattern=test/unitary",
     "test:integration": "yarn test --testPathPattern=test/integration",
     "lint": "eslint --fix",
