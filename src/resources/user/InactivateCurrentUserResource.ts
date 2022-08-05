@@ -5,7 +5,7 @@ import {
     ReadCurrentUserContract,
     InactivateCurrentUserContract
 } from "@/repositories/user";
-import { InternalServerError } from "@/errors";
+import { UnauthorizedError } from "@/errors";
 
 type InactivateCurrentUserDTO = zod.infer<typeof inactivateCurrentUserDTOSchema>;
 
@@ -24,7 +24,7 @@ export class InactivateCurrentUserResource {
             }
         );
         if (!doesUserExist)
-            throw new InternalServerError("Authenticated as unknown user");
+            throw new UnauthorizedError("Authenticated as unknown user");
 
         await this.inactivateCurrentUserRepository.inactivateCurrent(userData);
     }
