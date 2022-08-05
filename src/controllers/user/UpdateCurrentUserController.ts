@@ -25,7 +25,7 @@ export class UpdateCurrentUserController implements GenericControllerContract {
 
             const authenticationData = request.user;
             if (!authenticationData)
-                throw new InternalServerError("You must be authenticated to access this page");
+                throw new InternalServerError("User must be authenticated");
 
             const id = authenticationData.sub;
             const { name } = request.body;
