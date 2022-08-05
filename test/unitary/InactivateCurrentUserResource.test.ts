@@ -10,7 +10,7 @@ import {
     readCurrentUserRepositorySpy,
     inactivateCurrentUserRepositorySpy
 } from "@test/mocks/user";
-import { InternalServerError } from "@/errors";
+import { UnauthorizedError } from "@/errors";
 
 const inactivateCurrentUserResource = new InactivateCurrentUserResource(
     {
@@ -90,7 +90,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(InternalServerError);
+                    .toThrow(UnauthorizedError);
 
                 expect(readCurrentUserRepositorySpy).toHaveBeenCalledTimes(1);
                 expect(inactivateCurrentUserRepositorySpy).toHaveBeenCalledTimes(0);
@@ -108,7 +108,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(InternalServerError);
+                    .toThrow(UnauthorizedError);
 
                 expect(readCurrentUserRepositorySpy).toHaveBeenCalledTimes(1);
                 expect(inactivateCurrentUserRepositorySpy).toHaveBeenCalledTimes(0);

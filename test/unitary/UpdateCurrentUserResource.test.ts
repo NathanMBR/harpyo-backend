@@ -10,7 +10,7 @@ import {
     readCurrentUserRepositorySpy,
     updateCurrentUserRepositorySpy
 } from "@test/mocks/user";
-import { InternalServerError } from "@/errors";
+import { UnauthorizedError } from "@/errors";
 
 const updateCurrentUserResource = new UpdateCurrentUserResource(
     {
@@ -114,7 +114,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(InternalServerError);
+                    .toThrow(UnauthorizedError);
 
                 expect(readCurrentUserRepositorySpy).toHaveBeenCalledTimes(1);
                 expect(updateCurrentUserRepositorySpy).not.toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe(
                     )
                 )
                     .rejects
-                    .toThrow(InternalServerError);
+                    .toThrow(UnauthorizedError);
 
                 expect(readCurrentUserRepositorySpy).toBeCalledTimes(1);
                 expect(updateCurrentUserRepositorySpy).not.toHaveBeenCalled();
