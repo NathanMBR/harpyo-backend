@@ -6,7 +6,7 @@ import { NotFoundError } from "@/errors";
 
 type ReadNewestEmailConfirmationByUserIdDTO = zod.infer<typeof readNewestEmailConfirmationByUserIdDTOSchema>;
 
-export class readNewestEmailConfirmationByUserIdResource {
+export class ReadNewestEmailConfirmationByUserIdResource {
     constructor(
         private readonly readNewestEmailConfirmationByUserIdRepository: ReadNewestEmailConfirmationByUserIdContract
     ) {}
