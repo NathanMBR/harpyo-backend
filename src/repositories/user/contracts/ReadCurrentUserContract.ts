@@ -7,6 +7,7 @@ export namespace ReadCurrentUserContract {
         id: number;
         name: string;
         email: string;
+        confirmedAt: Date | null;
         password: string;
         createdAt: Date;
         updatedAt: Date;
