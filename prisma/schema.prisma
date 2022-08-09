@@ -43,7 +43,7 @@ model EmailConfirmation {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("emailConfirmations")
+  @@map("email_confirmations")
 }
 
 model PasswordReset {
@@ -59,7 +59,7 @@ model PasswordReset {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map("passwordResets")
+  @@map("password_resets")
 }
 
 model Folder {
