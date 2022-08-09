@@ -48,7 +48,8 @@ export class AuthenticationMiddleware implements GenericMiddlewareContract {
 
             request.user = {
                 sub: userId,
-                exp: tokenData.exp
+                exp: tokenData.exp,
+                isConfirmed: tokenData.isConfirmed
             };
 
             return next();
