@@ -6,6 +6,9 @@
   "repository": "https://github.com/NathanMBR/harpyo-backend.git",
   "author": "Nathan Murillo <nathanmurillodeoliveira@gmail.com>",
   "license": "MIT",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./src/database/prisma/runDevelopmentSeeds.ts"
+  },
   "scripts": {
     "postinstall": "husky install",
     "test": "jest --verbose --passWithNoTests --runInBand --testTimeout=120000",
@@ -16,7 +19,7 @@
     "build:types": "tsc -p tsconfig.build.json",
     "build:compile": "babel src --extensions .ts --out-dir build --source-maps --copy-files --no-copy-ignored",
     "start": "node --enable-source-maps .",
-    "start:dev": "node -r dotenv/config --enable-source-maps .",
+    "start:dev": "yarn prisma db seed && node -r dotenv/config --enable-source-maps .",
     "start:docker": "yarn prisma generate && yarn prisma migrate deploy && yarn build && yarn start:dev",
     "qs": "yarn build && yarn start:dev"
   },
