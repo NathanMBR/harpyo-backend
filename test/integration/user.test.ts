@@ -26,6 +26,7 @@ beforeAll(
             "password",
             16
         );
+        const confirmedAt = new Date();
 
         await prisma.$transaction(
             [
@@ -35,10 +36,12 @@ beforeAll(
                             name: "Read Current Test User",
                             email: "read.current@test.com",
                             password,
+                            confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "read.current@test.com"
+                                    email: "read.current@test.com",
+                                    confirmedAt
                                 }
                             }
                         }
@@ -51,10 +54,12 @@ beforeAll(
                             name: "Update Current Test User",
                             email: "update.current@test.com",
                             password,
+                            confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "update.current@test.com"
+                                    email: "update.current@test.com",
+                                    confirmedAt
                                 }
                             }
                         }
@@ -67,10 +72,12 @@ beforeAll(
                             name: "Inactivate Current Test User",
                             email: "inactivate.current@test.com",
                             password,
+                            confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "inactivate.current@test.com"
+                                    email: "inactivate.current@test.com",
+                                    confirmedAt
                                 }
                             }
                         }
@@ -83,10 +90,12 @@ beforeAll(
                             name: "Authenticate Test User",
                             email: "authenticate@test.com",
                             password,
+                            confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "authenticate@test.com"
+                                    email: "authenticate@test.com",
+                                    confirmedAt
                                 }
                             }
                         }
