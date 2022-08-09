@@ -3,6 +3,7 @@ declare namespace Express {
         user?: {
             sub: number;
             exp: number;
+            isConfirmed: boolean;
         };
     }
 }
