@@ -36,6 +36,8 @@ export class AuthenticateUserResource {
         if (!isPasswordValid)
             throw new BadRequestError(authenticationErrorMessage);
 
+        const isAccountConfirmed = !!unsafeUser.confirmedAt;
+
         const user = removePropertiesHelper(
             unsafeUser,
             "password"
@@ -43,7 +45,8 @@ export class AuthenticateUserResource {
 
         const jwt = sign(
             {
-                sub: user.id
+                sub: user.id,
+                isConfirmed: isAccountConfirmed
             },
             SECRET,
             {
