@@ -7,10 +7,14 @@ import {
     InactivateCurrentUserController,
     AuthenticateUserController
 } from "@/controllers/user";
-import { AuthenticationMiddleware } from "@/middlewares";
+import {
+    AuthenticationMiddleware,
+    ConfirmedAccountMiddleware
+} from "@/middlewares";
 
 const userRouter = Router();
 const authenticationMiddleware = new AuthenticationMiddleware().handle;
+const confirmedAccountMiddleware = new ConfirmedAccountMiddleware().handle;
 
 userRouter.post(
     "/user/create",
@@ -20,18 +24,21 @@ userRouter.post(
 userRouter.get(
     "/user/get",
     authenticationMiddleware,
+    confirmedAccountMiddleware,
     new ReadCurrentUserController().handle
 );
 
 userRouter.put(
     "/user/update",
     authenticationMiddleware,
+    confirmedAccountMiddleware,
     new UpdateCurrentUserController().handle
 );
 
 userRouter.delete(
     "/user/delete",
     authenticationMiddleware,
+    confirmedAccountMiddleware,
     new InactivateCurrentUserController().handle
 );
 
