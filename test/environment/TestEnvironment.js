@@ -22,7 +22,7 @@ class TestEnvironment extends NodeEnvironment {
         process.env.NODE_ENV = "test";
         this.global.process.env.NODE_ENV = "test";
 
-        execSync(`${prismaCLI} migrate dev`);
+        execSync(`${prismaCLI} migrate dev --skip-seed`);
     }
 
     async teardown() {
