@@ -28,6 +28,7 @@ export class PrismaCreateUserRepository implements CreateUserContract {
             name: user.name,
             email: user.email,
             password: user.password,
+            confirmedAt: user.confirmedAt,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
             deletedAt: user.deletedAt,
