@@ -1,18 +1,11 @@
+import { UserInterface } from "@/interfaces";
+
 export namespace ReadCurrentUserContract {
     export interface Request {
         id: number;
     }
 
-    export interface Response {
-        id: number;
-        name: string;
-        email: string;
-        confirmedAt: Date | null;
-        password: string;
-        createdAt: Date;
-        updatedAt: Date;
-        deletedAt: Date | null;
-    }
+    export type Response = UserInterface;
 }
 
 export interface ReadCurrentUserContract {

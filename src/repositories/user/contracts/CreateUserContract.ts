@@ -1,13 +1,7 @@
-interface EmailConfirmation {
-    id: number;
-    userId: number;
-    email: string;
-    token: string;
-    confirmedAt: Date | null;
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date | null;
-}
+import {
+    UserInterface,
+    EmailConfirmationInterface
+} from "@/interfaces";
 
 export namespace CreateUserContract {
     export interface Request {
@@ -16,17 +10,8 @@ export namespace CreateUserContract {
         password: string;
     }
 
-    export interface Response {
-        id: number;
-        name: string;
-        email: string;
-        password: string;
-        confirmedAt: Date | null;
-        createdAt: Date;
-        updatedAt: Date;
-        deletedAt: Date | null;
-
-        emailConfirmation: EmailConfirmation;
+    export type Response = UserInterface & {
+        emailConfirmation: EmailConfirmationInterface;
     }
 }
 
