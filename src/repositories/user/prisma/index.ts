@@ -3,3 +3,4 @@ export * from "./PrismaReadOneUserByEmailRepository";
 export * from "./PrismaReadCurrentUserRepository";
 export * from "./PrismaUpdateCurrentUserRepository";
 export * from "./PrismaInactivateCurrentUserRepository";
+export * from "./PrismaConfirmUserRepository";
