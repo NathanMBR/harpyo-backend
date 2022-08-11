@@ -7,6 +7,7 @@ export class PrismaFindOneEmailConfirmationByTokenRepository implements FindOneE
             {
                 where: {
                     token: data.token,
+                    confirmedAt: null,
                     deletedAt: null
                 }
             }
