@@ -8,6 +8,7 @@ export const updateCurrentUserRepositorySpy = jest.fn<UpdateCurrentUserContract[
             id: data.id,
             name: data.name,
             email: `${data.name.split(" ")[0].toLowerCase()}@email.com`,
+            confirmedAt: new Date(),
             password: "password",
             createdAt: new Date(),
             updatedAt: new Date(),
