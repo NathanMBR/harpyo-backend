@@ -49,7 +49,7 @@ userRouter.post(
 );
 
 userRouter.post(
-    "/user/confirm",
+    "/user/confirm/:token",
     new ConfirmUserController().handle
 );
 
