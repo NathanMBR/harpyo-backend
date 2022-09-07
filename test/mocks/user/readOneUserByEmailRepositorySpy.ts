@@ -17,6 +17,7 @@ export const readOneUserByEmailRepositorySpy = jest.fn<ReadOneUserByEmailContrac
                     name: "Already Existent User",
                     email: "already.existent.email@test.com",
                     password: hashedPassword,
+                    confirmedAt: null,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                     deletedAt: null
