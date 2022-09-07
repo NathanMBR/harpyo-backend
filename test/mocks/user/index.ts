@@ -3,5 +3,6 @@ export * from "./createUserRepositorySpy";
 export * from "./readCurrentUserRepositorySpy";
 export * from "./updateCurrentUserRepositorySpy";
 export * from "./inactivateCurrentUserRepositorySpy";
+export * from "./confirmUserRepositorySpy";
 
 export * from "./sendWelcomeEmailServiceSpy";
