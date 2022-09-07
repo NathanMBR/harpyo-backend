@@ -5,7 +5,8 @@ import {
     ReadCurrentUserController,
     UpdateCurrentUserController,
     InactivateCurrentUserController,
-    AuthenticateUserController
+    AuthenticateUserController,
+    ConfirmUserController
 } from "@/controllers/user";
 import {
     AuthenticationMiddleware,
@@ -45,6 +46,11 @@ userRouter.delete(
 userRouter.post(
     "/user/authenticate",
     new AuthenticateUserController().handle
+);
+
+userRouter.post(
+    "/user/confirm",
+    new ConfirmUserController().handle
 );
 
 export { userRouter };
