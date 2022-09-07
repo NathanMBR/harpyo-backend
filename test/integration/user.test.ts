@@ -20,6 +20,8 @@ import { baseURL } from "@test/settings";
 const prisma = new PrismaClient();
 const request = supertest(app);
 
+const confirmationToken = "48a57e82-571c-4df1-8027-451e8e4097cd";
+
 beforeAll(
     async () => {
         const password = await hash(
@@ -96,6 +98,25 @@ beforeAll(
                                 create: {
                                     email: "authenticate@test.com",
                                     confirmedAt
+                                }
+                            }
+                        }
+                    }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
+                            name: "Confirm Test User",
+                            email: "confirm@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                create: {
+                                    email: "confirm@test.com",
+                                    token: confirmationToken,
+                                    confirmedAt: null
                                 }
                             }
                         }
@@ -276,6 +297,25 @@ describe(
 
                 expect(response.body).toHaveProperty("token");
                 expect(typeof response.body.token).toBe("string");
+            }
+        );
+
+        it(
+            "Should successfully confirm an user account",
+            async () => {
+                const response = await request
+                    .post(`${baseURL}/user/confirm/${confirmationToken}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id");
+                expect(response.body).toHaveProperty("name", "Confirm Test User");
+                expect(response.body).toHaveProperty("email", "confirm@test.com");
+                expect(response.body).not.toHaveProperty("password");
+                expect(response.body).not.toHaveProperty("emailConfirmation");
+                expect(response.body).toHaveProperty("confirmedAt");
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
             }
         );
     }
