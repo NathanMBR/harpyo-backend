@@ -47,12 +47,18 @@ model EmailConfirmation {
   @@map("email_confirmations")
 }
 
+enum PasswordResetType {
+  RESET
+  CHANGE
+}
+
 model PasswordReset {
   id Int @id @default(autoincrement())
 
-  userId    Int       @db.Integer
-  token     String    @default(uuid())
-  resetedAt DateTime? @db.Timestamptz()
+  userId    Int               @db.Integer
+  token     String            @default(uuid())
+  resetedAt DateTime?         @db.Timestamptz()
+  method    PasswordResetType
 
   createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @updatedAt @db.Timestamptz()
