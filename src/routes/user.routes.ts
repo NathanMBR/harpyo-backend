@@ -6,7 +6,8 @@ import {
     UpdateCurrentUserController,
     InactivateCurrentUserController,
     AuthenticateUserController,
-    ConfirmUserController
+    ConfirmUserController,
+    UpdateCurrentUserPasswordController
 } from "@/controllers/user";
 import {
     AuthenticationMiddleware,
@@ -51,6 +52,13 @@ userRouter.post(
 userRouter.post(
     "/user/confirm/:token",
     new ConfirmUserController().handle
+);
+
+userRouter.put(
+    "/user/update-password",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new UpdateCurrentUserPasswordController().handle
 );
 
 export { userRouter };
