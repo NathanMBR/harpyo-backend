@@ -6,3 +6,4 @@ export * from "./UpdateCurrentUserResource";
 export * from "./InactivateCurrentUserResource";
 export * from "./AuthenticateUserResource";
 export * from "./ConfirmUserResource";
+export * from "./UpdateCurrentUserPasswordResource";
