@@ -4,3 +4,4 @@ export * from "./updateCurrentUserDTOSchema";
 export * from "./inactivateCurrentUserDTOSchema";
 export * from "./authenticateUserDTOSchema";
 export * from "./confirmUserDTOSchema";
+export * from "./updateCurrentUserPasswordDTOSchema";
