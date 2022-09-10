@@ -121,6 +121,24 @@ beforeAll(
                             }
                         }
                     }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
+                            name: "Update Current Password Test User",
+                            email: "update.current.password@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                create: {
+                                    email: "update.current.password@test.com",
+                                    confirmedAt
+                                }
+                            }
+                        }
+                    }
                 )
             ]
         );
@@ -315,6 +333,46 @@ describe(
                 expect(response.body).toHaveProperty("confirmedAt");
                 expect(response.body).toHaveProperty("createdAt");
                 expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully update an user password",
+            async () => {
+                const authenticationData = {
+                    email: "update.current.password@test.com",
+                    password: "password"
+                };
+
+                const passwordToUpdate = {
+                    name: "New name",
+                    email: "new.email@test.com",
+                    currentPassword: "password",
+                    newPassword: "new-password"
+                };
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const authenticationToken = authenticationResponse.body.token;
+                const response = await request
+                    .put(`${baseURL}/user/update-password`)
+                    .send(passwordToUpdate)
+                    .set("Authorization", `Bearer ${authenticationToken}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id");
+                expect(response.body).toHaveProperty("name");
+                expect(response.body.name).not.toBe(passwordToUpdate.name);
+                expect(response.body).toHaveProperty("email");
+                expect(response.body.email).not.toBe(passwordToUpdate.email);
+                expect(response.body).not.toHaveProperty("password");
+                expect(response.body).not.toHaveProperty("emailConfirmation");
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body.createdAt).not.toBe(response.body.updatedAt);
                 expect(response.body).toHaveProperty("deletedAt", null);
             }
         );
