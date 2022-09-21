@@ -7,7 +7,8 @@ import {
     InactivateCurrentUserController,
     AuthenticateUserController,
     ConfirmUserController,
-    UpdateCurrentUserPasswordController
+    UpdateCurrentUserPasswordController,
+    UpdateUserPasswordByTokenController
 } from "@/controllers/user";
 import {
     AuthenticationMiddleware,
@@ -59,6 +60,11 @@ userRouter.put(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new UpdateCurrentUserPasswordController().handle
+);
+
+userRouter.put(
+    "/user/reset-password/:token",
+    new UpdateUserPasswordByTokenController().handle
 );
 
 export { userRouter };
