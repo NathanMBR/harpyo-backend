@@ -40,7 +40,7 @@ export class UpdateUserPasswordByTokenController implements GenericControllerCon
                 }
             );
 
-            return response.json();
+            return response.sendStatus(204);
         } catch (error) {
             return controllerErrorHandler(response, error);
         }
