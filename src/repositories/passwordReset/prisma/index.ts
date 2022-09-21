@@ -1,3 +1,3 @@
 export * from "./PrismaReadOnePasswordResetByTokenRepository";
 export * from "./PrismaCreatePasswordResetRepository";
-export * from "./PrismaUpdatePasswordResetByTokenRepository";
+export * from "./PrismaUpdatePasswordResetRepository";

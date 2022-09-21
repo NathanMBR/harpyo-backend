@@ -1,7 +1,7 @@
 import { UpdatePasswordResetContract } from "@/repositories/passwordReset";
 import { prisma } from "@/database/prisma";
 
-export class PrismaUpdatePasswordResetByTokenRepository implements UpdatePasswordResetContract {
+export class PrismaUpdatePasswordResetRepository implements UpdatePasswordResetContract {
     async update(data: UpdatePasswordResetContract.Request) {
         const passwordReset = await prisma.passwordReset.update(
             {
