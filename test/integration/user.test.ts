@@ -12,15 +12,16 @@ import {
 
 import { PrismaClient } from "@prisma/client";
 import supertest from "supertest";
-import { hash } from "bcryptjs";
+import {
+    hash,
+    compare
+} from "bcryptjs";
 
 import { app } from "@/server";
 import { baseURL } from "@test/settings";
 
 const prisma = new PrismaClient();
 const request = supertest(app);
-
-const confirmationToken = "48a57e82-571c-4df1-8027-451e8e4097cd";
 
 beforeAll(
     async () => {
@@ -115,7 +116,7 @@ beforeAll(
                             emailConfirmations: {
                                 create: {
                                     email: "confirm@test.com",
-                                    token: confirmationToken,
+                                    token: "48a57e82-571c-4df1-8027-451e8e4097cd",
                                     confirmedAt: null
                                 }
                             }
@@ -135,6 +136,32 @@ beforeAll(
                                 create: {
                                     email: "update.current.password@test.com",
                                     confirmedAt
+                                }
+                            }
+                        }
+                    }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
+                            name: "Update Password By Token Test User",
+                            email: "update.password.by.token@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                create: {
+                                    email: "update.password.by.token@test.com",
+                                    confirmedAt
+                                }
+                            },
+
+                            passwordResets: {
+                                create: {
+                                    token: "1047b311-24cc-4c96-87d8-d890bfd72da8",
+                                    method: "RESET",
+                                    resetedAt: null
                                 }
                             }
                         }
@@ -321,8 +348,9 @@ describe(
         it(
             "Should successfully confirm an user account",
             async () => {
+                const emailConfirmationToken = "48a57e82-571c-4df1-8027-451e8e4097cd";
                 const response = await request
-                    .post(`${baseURL}/user/confirm/${confirmationToken}`);
+                    .post(`${baseURL}/user/confirm/${emailConfirmationToken}`);
 
                 expect(response.status).toBe(200);
                 expect(response.body).toHaveProperty("id");
@@ -374,6 +402,46 @@ describe(
                 expect(response.body).toHaveProperty("updatedAt");
                 expect(response.body.createdAt).not.toBe(response.body.updatedAt);
                 expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully update an user password by token",
+            async () => {
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const passwordResetToken = "1047b311-24cc-4c96-87d8-d890bfd72da8";
+                const passwordToUpdate = {
+                    password: "87654321"
+                };
+
+                const response = await request
+                    .put(`${baseURL}/user/reset-password/${passwordResetToken}`)
+                    .send(passwordToUpdate);
+
+                const passwordResetInDatabase = await prisma.passwordReset.findFirst(
+                    {
+                        where: {
+                            token: passwordResetToken
+                        },
+
+                        include: {
+                            user: {
+                                include: {
+                                    emailConfirmations: true
+                                }
+                            }
+                        }
+                    }
+                );
+
+                const doesPasswordsMatch = await compare(passwordToUpdate.password, passwordResetInDatabase!.user.password);
+
+                expect(response.status).toBe(204);
+                expect(passwordResetInDatabase).toBeDefined();
+                expect(passwordResetInDatabase!.resetedAt).not.toBeNull();
+                expect(passwordResetInDatabase!.deletedAt).toBeNull();
+                expect(doesPasswordsMatch).toBe(true);
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
             }
         );
     }
