@@ -6,3 +6,4 @@ export * from "./AuthenticateUserController";
 export * from "./ConfirmUserController";
 export * from "./UpdateCurrentUserPasswordController";
 export * from "./UpdateUserPasswordByTokenController";
+export * from "./RequestPasswordResetController";
