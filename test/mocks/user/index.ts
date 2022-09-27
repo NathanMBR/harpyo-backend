@@ -7,3 +7,4 @@ export * from "./confirmUserRepositorySpy";
 export * from "./updateCurrentUserPasswordRepositorySpy";
 
 export * from "./sendWelcomeEmailServiceSpy";
+export * from "./sendPasswordResetRequestEmailServiceSpy";
