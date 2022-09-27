@@ -8,7 +8,8 @@ import {
     AuthenticateUserController,
     ConfirmUserController,
     UpdateCurrentUserPasswordController,
-    UpdateUserPasswordByTokenController
+    UpdateUserPasswordByTokenController,
+    RequestPasswordResetController
 } from "@/controllers/user";
 import {
     AuthenticationMiddleware,
@@ -65,6 +66,11 @@ userRouter.put(
 userRouter.put(
     "/user/reset-password/:token",
     new UpdateUserPasswordByTokenController().handle
+);
+
+userRouter.post(
+    "/user/request-password-reset/:email",
+    new RequestPasswordResetController().handle
 );
 
 export { userRouter };
