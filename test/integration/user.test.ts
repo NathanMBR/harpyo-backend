@@ -166,6 +166,24 @@ beforeAll(
                             }
                         }
                     }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
+                            name: "Request Password Reset Test User",
+                            email: "request.password.reset@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                create: {
+                                    email: "request.password.reset@test.com",
+                                    confirmedAt
+                                }
+                            }
+                        }
+                    }
                 )
             ]
         );
@@ -437,11 +455,40 @@ describe(
                 const doesPasswordsMatch = await compare(passwordToUpdate.password, passwordResetInDatabase!.user.password);
 
                 expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
                 expect(passwordResetInDatabase).toBeDefined();
                 expect(passwordResetInDatabase!.resetedAt).not.toBeNull();
                 expect(passwordResetInDatabase!.deletedAt).toBeNull();
                 expect(doesPasswordsMatch).toBe(true);
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
+            }
+        );
+
+        it(
+            "Should successfully request a password reset",
+            async () => {
                 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const emailToRequestPasswordReset = "request.password.reset@test.com";
+
+                const response = await request
+                    .post(`${baseURL}/user/request-password-reset/${emailToRequestPasswordReset}`);
+
+                const passwordResetInDatabase = await prisma.passwordReset.findFirst(
+                    {
+                        where: {
+                            user: {
+                                email: emailToRequestPasswordReset
+                            },
+                            deletedAt: null
+                        }
+                    }
+                );
+
+                expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
+                expect(passwordResetInDatabase).toBeDefined();
+                expect(passwordResetInDatabase!.resetedAt).toBeNull();
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
     }
