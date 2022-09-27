@@ -8,3 +8,4 @@ export * from "./AuthenticateUserResource";
 export * from "./ConfirmUserResource";
 export * from "./UpdateCurrentUserPasswordResource";
 export * from "./UpdateUserPasswordByTokenResource";
+export * from "./RequestPasswordResetResource";
