@@ -7,3 +7,4 @@ export * from "./confirmUserDTOSchema";
 export * from "./updateCurrentUserPasswordDTOSchema";
 export * from "./updateUserPasswordByTokenDTOSchema";
 export * from "./requestPasswordResetDTOSchema";
+export * from "./requestEmailConfirmationDTOSchema";
