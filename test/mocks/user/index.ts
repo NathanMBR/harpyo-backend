@@ -8,3 +8,4 @@ export * from "./updateCurrentUserPasswordRepositorySpy";
 
 export * from "./sendWelcomeEmailServiceSpy";
 export * from "./sendPasswordResetRequestEmailServiceSpy";
+export * from "./sendEmailConfirmationEmailServiceSpy";
