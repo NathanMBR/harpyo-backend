@@ -7,10 +7,11 @@ export const requestPasswordResetDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide an e-mail",
-                    invalid_type_error: "Your e-mail must be a text"
+                    invalid_type_error: "Your e-mail must be a text",
+                    description: "The account e-mail"
                 }
             )
-            .email()
+            .email("The e-mail must be in a valid format")
             .max(255, "Your e-mail is too long (must have a maximum of 255 characters)")
     }
 );

@@ -7,7 +7,8 @@ export const createUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide a name",
-                    invalid_type_error: "Your name must be a text"
+                    invalid_type_error: "Your name must be a text",
+                    description: "The account name"
                 }
             )
             .min(3, "Your name is too short (must have a minimum of 3 characters)")
@@ -17,7 +18,8 @@ export const createUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide an e-mail",
-                    invalid_type_error: "Your e-mail must be a text"
+                    invalid_type_error: "Your e-mail must be a text",
+                    description: "The account e-mail"
                 }
             )
             .email("Your e-mail format is invalid")
@@ -27,7 +29,8 @@ export const createUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide a password",
-                    invalid_type_error: "Your password must be a text"
+                    invalid_type_error: "Your password must be a text",
+                    description: "The account password"
                 }
             )
             .min(8, "Your password is too short (must have a minimum of 8 characters)")

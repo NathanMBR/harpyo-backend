@@ -7,7 +7,8 @@ export const updateCurrentUserPasswordDTOSchema = zod.object(
             .number(
                 {
                     required_error: "You must provide your user ID",
-                    invalid_type_error: "Your user ID must be a number"
+                    invalid_type_error: "Your user ID must be a number",
+                    description: "The account ID"
                 }
             )
             .positive("Your user ID must be greater than or equal 1")
@@ -17,7 +18,8 @@ export const updateCurrentUserPasswordDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide your current password",
-                    invalid_type_error: "Your current password must be a text"
+                    invalid_type_error: "Your current password must be a text",
+                    description: "The current account password"
                 }
             )
             .min(8, "Your current password is too short (must have a minimum of 8 characters)")
@@ -27,7 +29,8 @@ export const updateCurrentUserPasswordDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide your new password",
-                    invalid_type_error: "Your new password must be a text"
+                    invalid_type_error: "Your new password must be a text",
+                    description: "The new account password"
                 }
             )
             .min(8, "Your new password is too short (must have a minimum of 8 characters)")

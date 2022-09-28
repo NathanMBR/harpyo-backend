@@ -7,7 +7,8 @@ export const updateCurrentUserDTOSchema = zod.object(
             .number(
                 {
                     required_error: "You must provide your user ID",
-                    invalid_type_error: "Your user ID must be a number"
+                    invalid_type_error: "Your user ID must be a number",
+                    description: "The account ID"
                 }
             )
             .positive("Your user ID must be greater than or equal 1")
@@ -17,7 +18,8 @@ export const updateCurrentUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide a name",
-                    invalid_type_error: "Your name must be a text"
+                    invalid_type_error: "Your name must be a text",
+                    description: "The new account name"
                 }
             )
             .min(3, "Your name is too short (must have a minimum of 3 characters)")

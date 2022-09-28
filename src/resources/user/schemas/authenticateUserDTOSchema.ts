@@ -7,7 +7,8 @@ export const authenticateUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide an e-mail",
-                    invalid_type_error: "Your e-mail must be a text"
+                    invalid_type_error: "Your e-mail must be a text",
+                    description: "The account e-mail"
                 }
             )
             .email("Your e-mail format is invalid")
@@ -17,7 +18,8 @@ export const authenticateUserDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide a password",
-                    invalid_type_error: "Your password must be a text"
+                    invalid_type_error: "Your password must be a text",
+                    description: "The account password"
                 }
             )
     }

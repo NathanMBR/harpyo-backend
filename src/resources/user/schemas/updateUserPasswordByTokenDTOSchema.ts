@@ -7,7 +7,8 @@ export const updateUserPasswordByTokenDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide a token",
-                    invalid_type_error: "Your token must be a text"
+                    invalid_type_error: "Your token must be a text",
+                    description: "The token to reset the account password"
                 }
             )
             .uuid("Your token must be a valid v4 UUID"),
@@ -16,7 +17,8 @@ export const updateUserPasswordByTokenDTOSchema = zod.object(
             .string(
                 {
                     required_error: "You must provide your new password",
-                    invalid_type_error: "Your new password must be a text"
+                    invalid_type_error: "Your new password must be a text",
+                    description: "The new account password"
                 }
             )
             .min(8, "Your new password is too short (must have a minimum of 8 characters)")

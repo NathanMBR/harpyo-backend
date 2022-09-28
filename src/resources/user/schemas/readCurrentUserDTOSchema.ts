@@ -7,7 +7,8 @@ export const readCurrentUserDTOSchema = zod.object(
             .number(
                 {
                     required_error: "You must provide your user ID",
-                    invalid_type_error: "Your user ID must be a number"
+                    invalid_type_error: "Your user ID must be a number",
+                    description: "The account ID"
                 }
             )
             .positive("Your user ID must be greater than or equal 1")
