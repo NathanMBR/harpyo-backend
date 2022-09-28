@@ -7,3 +7,4 @@ export * from "./ConfirmUserController";
 export * from "./UpdateCurrentUserPasswordController";
 export * from "./UpdateUserPasswordByTokenController";
 export * from "./RequestPasswordResetController";
+export * from "./RequestEmailConfirmationController";
