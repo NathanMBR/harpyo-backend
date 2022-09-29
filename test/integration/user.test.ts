@@ -202,6 +202,35 @@ beforeAll(
                             }
                         }
                     }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
+                            name: "Update User Email By Token Test User",
+                            email: "update.user.email.by.token@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                createMany: {
+                                    skipDuplicates: false,
+                                    data: [
+                                        {
+                                            email: "update.user.email.by.token@test.com",
+                                            confirmedAt
+                                        },
+
+                                        {
+                                            email: "new.update.user.email.by.token@test.com",
+                                            confirmedAt: null,
+                                            token: "76be07eb-f79a-4ba4-a01f-a3e28ff16b13"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
                 )
             ]
         );
@@ -557,6 +586,50 @@ describe(
                 expect(emailConfirmationInDatabase).toBeDefined();
                 expect(emailConfirmationInDatabase!.email).toBe(emailConfirmationToRequest.email);
                 expect(emailConfirmationInDatabase!.confirmedAt).toBeNull();
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
+            }
+        );
+
+        it(
+            "Should successfully update the current user email by token",
+            async () => {
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const authenticationData = {
+                    email: "update.user.email.by.token@test.com",
+                    password: "password"
+                };
+
+                const tokenToUpdateEmail = "76be07eb-f79a-4ba4-a01f-a3e28ff16b13";
+                const emailToUpdate = {
+                    email: "new.update.user.email.by.token@test.com"
+                };
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const authenticationToken = authenticationResponse.body.token;
+                const response = await request
+                    .put(`${baseURL}/user/update-email/${tokenToUpdateEmail}`)
+                    .send(emailToUpdate)
+                    .set("Authorization", `Bearer ${authenticationToken}`);
+
+                const emailConfirmationInDatabase = await prisma.emailConfirmation.findFirst(
+                    {
+                        where: {
+                            token: tokenToUpdateEmail,
+                            deletedAt: null
+                        }
+                    }
+                );
+
+                expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
+
+                expect(emailConfirmationInDatabase).toBeDefined();
+                expect(emailConfirmationInDatabase!.email).toBe(emailToUpdate.email);
+                expect(emailConfirmationInDatabase!.confirmedAt).not.toBeNull();
+                expect(emailConfirmationInDatabase!.userId).toBe(authenticationResponse.body.user.id);
                 /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
