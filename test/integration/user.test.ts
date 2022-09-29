@@ -145,6 +145,24 @@ beforeAll(
                 prisma.user.create(
                     {
                         data: {
+                            name: "Request Password Reset Test User",
+                            email: "request.password.reset@test.com",
+                            password,
+                            confirmedAt,
+
+                            emailConfirmations: {
+                                create: {
+                                    email: "request.password.reset@test.com",
+                                    confirmedAt
+                                }
+                            }
+                        }
+                    }
+                ),
+
+                prisma.user.create(
+                    {
+                        data: {
                             name: "Update Password By Token Test User",
                             email: "update.password.by.token@test.com",
                             password,
@@ -171,14 +189,14 @@ beforeAll(
                 prisma.user.create(
                     {
                         data: {
-                            name: "Request Password Reset Test User",
-                            email: "request.password.reset@test.com",
+                            name: "Request Email Confirmation Test User",
+                            email: "request.email.confirmation@test.com",
                             password,
                             confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "request.password.reset@test.com",
+                                    email: "request.email.confirmation@test.com",
                                     confirmedAt
                                 }
                             }
@@ -424,6 +442,34 @@ describe(
         );
 
         it(
+            "Should successfully request a password reset",
+            async () => {
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const emailToRequestPasswordReset = "request.password.reset@test.com";
+
+                const response = await request
+                    .post(`${baseURL}/user/request-password-reset/${emailToRequestPasswordReset}`);
+
+                const passwordResetInDatabase = await prisma.passwordReset.findFirst(
+                    {
+                        where: {
+                            user: {
+                                email: emailToRequestPasswordReset
+                            },
+                            deletedAt: null
+                        }
+                    }
+                );
+
+                expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
+                expect(passwordResetInDatabase).toBeDefined();
+                expect(passwordResetInDatabase!.resetedAt).toBeNull();
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
+            }
+        );
+
+        it(
             "Should successfully update an user password by token",
             async () => {
                 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -465,20 +511,35 @@ describe(
         );
 
         it(
-            "Should successfully request a password reset",
+            "Should successfully request an email confirmation",
             async () => {
                 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-                const emailToRequestPasswordReset = "request.password.reset@test.com";
+                const authenticationData = {
+                    email: "request.email.confirmation@test.com",
+                    password: "password"
+                };
 
+                const emailConfirmationToRequest = {
+                    email: "new.request.email.confirmation@test.com"
+                };
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const authenticationToken = authenticationResponse.body.token;
                 const response = await request
-                    .post(`${baseURL}/user/request-password-reset/${emailToRequestPasswordReset}`);
+                    .post(`${baseURL}/user/request-email-confirmation`)
+                    .send(emailConfirmationToRequest)
+                    .set("Authorization", `Bearer ${authenticationToken}`);
 
-                const passwordResetInDatabase = await prisma.passwordReset.findFirst(
+                const emailConfirmationInDatabase = await prisma.emailConfirmation.findFirst(
                     {
                         where: {
                             user: {
-                                email: emailToRequestPasswordReset
+                                id: authenticationResponse.body.user.id
                             },
+                            confirmedAt: null,
                             deletedAt: null
                         }
                     }
@@ -486,8 +547,10 @@ describe(
 
                 expect(response.status).toBe(204);
                 expect(response.body).toStrictEqual({});
-                expect(passwordResetInDatabase).toBeDefined();
-                expect(passwordResetInDatabase!.resetedAt).toBeNull();
+
+                expect(emailConfirmationInDatabase).toBeDefined();
+                expect(emailConfirmationInDatabase!.email).toBe(emailConfirmationToRequest.email);
+                expect(emailConfirmationInDatabase!.confirmedAt).toBeNull();
                 /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
