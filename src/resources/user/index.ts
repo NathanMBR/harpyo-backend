@@ -10,3 +10,4 @@ export * from "./UpdateCurrentUserPasswordResource";
 export * from "./UpdateUserPasswordByTokenResource";
 export * from "./RequestPasswordResetResource";
 export * from "./RequestEmailConfirmationResource";
+export * from "./UpdateUserEmailByTokenResource";
