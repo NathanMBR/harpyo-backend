@@ -30,7 +30,7 @@ export class ConfirmUserController implements GenericControllerContract {
                 confirmEmailConfirmationRepository
             );
 
-            const { token } = request.params;
+            const { token } = request.body;
 
             const user = await confirmUserResource.execute(
                 {

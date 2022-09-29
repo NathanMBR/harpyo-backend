@@ -53,7 +53,7 @@ userRouter.post(
 );
 
 userRouter.post(
-    "/user/confirm/:token",
+    "/user/confirm",
     new ConfirmUserController().handle
 );
 
@@ -65,7 +65,7 @@ userRouter.put(
 );
 
 userRouter.post(
-    "/user/request-password-reset/:email",
+    "/user/request-password-reset",
     new RequestPasswordResetController().handle
 );
 

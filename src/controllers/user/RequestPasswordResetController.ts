@@ -23,7 +23,7 @@ export class RequestPasswordResetController implements GenericControllerContract
                 sendPasswordResetRequestEmailService
             );
 
-            const { email } = request.params;
+            const { email } = request.body;
             await requestPasswordResetResource.execute(
                 {
                     email
