@@ -10,7 +10,8 @@ import {
     UpdateCurrentUserPasswordController,
     RequestPasswordResetController,
     UpdateUserPasswordByTokenController,
-    RequestEmailConfirmationController
+    RequestEmailConfirmationController,
+    UpdateCurrentUserEmailByTokenController
 } from "@/controllers/user";
 import {
     AuthenticationMiddleware,
@@ -79,6 +80,13 @@ userRouter.post(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new RequestEmailConfirmationController().handle
+);
+
+userRouter.put(
+    "/user/update-email/:token",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new UpdateCurrentUserEmailByTokenController().handle
 );
 
 export { userRouter };
