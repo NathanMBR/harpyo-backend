@@ -7,7 +7,7 @@ import {
 } from "@/repositories/emailConfirmation";
 import { UpdateCurrentUserEmailContract } from "@/repositories/user";
 import {
-    BadRequestError,
+    UnauthorizedError,
     NotFoundError
 } from "@/errors";
 
@@ -37,7 +37,7 @@ export class UpdateUserEmailByTokenResource {
             throw new NotFoundError("Token not found");
 
         if (emailConfirmation.userId !== userId)
-            throw new BadRequestError("The current email change request doesn't belong to the current user");
+            throw new UnauthorizedError("The current email change request doesn't belong to the current user");
 
         await this.confirmEmailConfirmationRepository.confirm(
             {
