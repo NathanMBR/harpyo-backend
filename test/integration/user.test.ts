@@ -384,9 +384,12 @@ describe(
         it(
             "Should successfully confirm an user account",
             async () => {
-                const emailConfirmationToken = "48a57e82-571c-4df1-8027-451e8e4097cd";
+                const emailConfirmationToConfirmByToken = {
+                    token: "48a57e82-571c-4df1-8027-451e8e4097cd"
+                };
                 const response = await request
-                    .post(`${baseURL}/user/confirm/${emailConfirmationToken}`);
+                    .post(`${baseURL}/user/confirm`)
+                    .send(emailConfirmationToConfirmByToken);
 
                 expect(response.status).toBe(200);
                 expect(response.body).toHaveProperty("id");
@@ -445,16 +448,19 @@ describe(
             "Should successfully request a password reset",
             async () => {
                 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-                const emailToRequestPasswordReset = "request.password.reset@test.com";
+                const passwordResetToRequestByEmail = {
+                    email: "request.password.reset@test.com"
+                };
 
                 const response = await request
-                    .post(`${baseURL}/user/request-password-reset/${emailToRequestPasswordReset}`);
+                    .post(`${baseURL}/user/request-password-reset/`)
+                    .send(passwordResetToRequestByEmail);
 
                 const passwordResetInDatabase = await prisma.passwordReset.findFirst(
                     {
                         where: {
                             user: {
-                                email: emailToRequestPasswordReset
+                                email: passwordResetToRequestByEmail.email
                             },
                             deletedAt: null
                         }
