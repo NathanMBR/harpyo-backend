@@ -3,7 +3,7 @@ import { jest } from "@jest/globals";
 import { FindOneEmailConfirmationByTokenContract } from "@/repositories/emailConfirmation";
 
 export const findOneEmailConfirmationByTokenRepositorySpy = jest.fn<FindOneEmailConfirmationByTokenContract["findOneByToken"]>(
-    async data => (
+    async data => Promise.resolve(
         {
             id: 1,
             userId: 1,
