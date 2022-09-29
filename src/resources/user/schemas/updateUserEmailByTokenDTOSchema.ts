@@ -13,6 +13,17 @@ export const updateUserEmailByTokenDTOSchema = zod.object(
             )
             .uuid("Your token must be a valid v4 UUID"),
 
+        userId: zod
+            .number(
+                {
+                    required_error: "You must provide a user ID",
+                    invalid_type_error: "Your user ID must be a number",
+                    description: "The account ID"
+                }
+            )
+            .int("Your user ID must be an integer")
+            .positive("Your user ID must be a positive number"),
+
         email: zod
             .string(
                 {
