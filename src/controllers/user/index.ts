@@ -8,3 +8,4 @@ export * from "./UpdateCurrentUserPasswordController";
 export * from "./UpdateUserPasswordByTokenController";
 export * from "./RequestPasswordResetController";
 export * from "./RequestEmailConfirmationController";
+export * from "./UpdateCurrentUserEmailByTokenController";
