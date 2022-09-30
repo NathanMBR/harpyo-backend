@@ -3,6 +3,15 @@ import { z as zod } from "zod";
 /* eslint-disable camelcase */
 export const findAllFoldersDTOSchema = zod.object(
     {
+        userId: zod
+            .number(
+                {
+                    required_error: "The current user ID is required",
+                    invalid_type_error: "The current user ID must be a number",
+                    description: "The current user ID"
+                }
+            ),
+
         skip: zod
             .number(
                 {
