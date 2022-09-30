@@ -20,6 +20,10 @@ export class PrismaFindAllFoldersRepository implements FindAllFoldersContract {
         const folders = await prisma.folder.findMany(
             {
                 where: {
+                    user: {
+                        id: data.userId
+                    },
+
                     name: {
                         contains: data.search
                     }
