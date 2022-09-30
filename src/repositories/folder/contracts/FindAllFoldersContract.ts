@@ -2,6 +2,7 @@ import { FolderInterface } from "@/interfaces";
 
 export namespace FindAllFoldersContract {
     export interface Request {
+        userId: number;
         skip: number;
         take: number;
         orderColumn?: "id" | "updatedAt";
