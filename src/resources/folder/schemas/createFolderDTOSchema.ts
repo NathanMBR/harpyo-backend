@@ -11,6 +11,7 @@ export const createFolderDTOSchema = zod.object(
                     description: "The folder name"
                 }
             )
+            .min(1, "The folder name is too short (must have a minimum of 1 character)")
             .max(255, "The folder name is too long (must have a maximum of 255 characters)"),
 
         userId: zod
