@@ -1,7 +1,8 @@
 import { Router } from "express";
 
 import {
-    CreateFolderController
+    CreateFolderController,
+    FindAllFoldersController
 } from "@/controllers/folder";
 import {
     AuthenticationMiddleware,
@@ -17,6 +18,13 @@ folderRouter.post(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new CreateFolderController().handle
+);
+
+folderRouter.get(
+    "/folder/all",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new FindAllFoldersController().handle
 );
 
 export { folderRouter };
