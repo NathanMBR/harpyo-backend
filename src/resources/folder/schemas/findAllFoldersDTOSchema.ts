@@ -12,27 +12,27 @@ export const findAllFoldersDTOSchema = zod.object(
                 }
             ),
 
-        skip: zod
+        page: zod
             .number(
                 {
-                    required_error: "The skip amount is required",
-                    invalid_type_error: "The skip amount must be a number",
-                    description: "The skip amount"
+                    invalid_type_error: "The folder page must be a number",
+                    description: "The page of the folders data"
                 }
             )
-            .int("The skip amount must be an integer")
-            .positive("The skip amount must be positive"),
+            .int("The folder page must be an integer")
+            .positive("The folder page must be positive")
+            .optional(),
 
-        take: zod
+        quantity: zod
             .number(
                 {
-                    required_error: "The take amount is required",
-                    invalid_type_error: "The take amount must be a number",
-                    description: "The take amount"
+                    invalid_type_error: "The folders quantity must be a number",
+                    description: "The quantity of folders to be returned"
                 }
             )
-            .int("The take amount must be an integer")
-            .positive("The take amount must be positive"),
+            .int("The folders quantity must be an integer")
+            .positive("The folders quantity must be positive")
+            .optional(),
 
         orderColumn: zod
             .string(
