@@ -32,11 +32,11 @@ export class FindAllFoldersController implements GenericControllerContract {
             const quantity = Number(request.query.quantity) || undefined;
 
             const orderColumn = request.query.orderColumn
-                ? String(request.query.orderColumn)
+                ? String(request.query.orderColumn) as "id" | "updatedAt"
                 : undefined;
 
             const orderBy = request.query.orderBy
-                ? String(request.query.orderBy)
+                ? String(request.query.orderBy) as "asc" | "desc"
                 : "asc";
 
             const search = request.query.search
