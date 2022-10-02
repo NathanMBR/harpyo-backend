@@ -10,7 +10,9 @@ export const findAllFoldersDTOSchema = zod.object(
                     invalid_type_error: "The current user ID must be a number",
                     description: "The current user ID"
                 }
-            ),
+            )
+            .int("The current user ID must be an integer")
+            .positive("The current user ID must be positive"),
 
         page: zod
             .number(
