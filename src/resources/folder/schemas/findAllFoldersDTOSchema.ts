@@ -35,32 +35,30 @@ export const findAllFoldersDTOSchema = zod.object(
             .optional(),
 
         orderColumn: zod
-            .string(
+            .enum(
+                [
+                    "id",
+                    "updatedAt"
+                ],
+
                 {
                     invalid_type_error: "The order column must be a string",
                     description: "The column to order by"
                 }
             )
-            .refine(
-                orderColumn => orderColumn === "id" || orderColumn === "updatedAt",
-                {
-                    message: "The order column must be either \"id\" or \"updatedAt\""
-                }
-            )
             .optional(),
 
         orderBy: zod
-            .string(
+            .enum(
+                [
+                    "asc",
+                    "desc"
+                ],
+
                 {
                     required_error: "The order direction is required",
-                    invalid_type_error: "The order direction must be a string",
+                    invalid_type_error: "The order direction must be a text",
                     description: "The order direction"
-                }
-            )
-            .refine(
-                orderBy => orderBy === "asc" || orderBy === "desc",
-                {
-                    message: "The order direction must be either \"asc\" or \"desc\""
                 }
             ),
 
