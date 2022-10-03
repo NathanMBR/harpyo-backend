@@ -57,127 +57,127 @@ beforeAll(
                         skipDuplicates: false,
                         data: [
                             {
-                                name: "Find All Folders Test Folder 1",
+                                name: "Find Test Folder 1",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 2",
+                                name: "Find Test Folder 2",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 3",
+                                name: "Find Test Folder 3",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 4",
+                                name: "Find Test Folder 4",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 5",
+                                name: "Find Test Folder 5",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 6",
+                                name: "Find Test Folder 6",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 7",
+                                name: "Find Test Folder 7",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 8",
+                                name: "Find Test Folder 8",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 9",
+                                name: "Find Test Folder 9",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 10",
+                                name: "Find Test Folder 10",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 11",
+                                name: "Find Test Folder 11",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 12",
+                                name: "Find Test Folder 12",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 13",
+                                name: "Find Test Folder 13",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 14",
+                                name: "Find Test Folder 14",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 15",
+                                name: "Find Test Folder 15",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 16",
+                                name: "Find Test Folder 16",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 17",
+                                name: "Find Test Folder 17",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 18",
+                                name: "Find Test Folder 18",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 19",
+                                name: "Find Test Folder 19",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 20",
+                                name: "Find Test Folder 20",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 21",
+                                name: "Find Test Folder 21",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 22",
+                                name: "Find Test Folder 22",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 23",
+                                name: "Find Test Folder 23",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 24",
+                                name: "Find Test Folder 24",
                                 userId: 1
                             },
 
                             {
-                                name: "Find All Folders Test Folder 25",
+                                name: "Find Test Folder 25",
                                 userId: 1
                             }
                         ]
@@ -255,7 +255,7 @@ describe(
                 expect(response.body).toHaveProperty("data");
                 expect(response.body.data).toHaveLength(6);
                 expect(response.body.data.every((folder: Folder) => !!folder.id)).toBe(true);
-                expect(response.body.data.every((folder: Folder) => folder.name.startsWith("Find All Folders Test Folder"))).toBe(true);
+                expect(response.body.data.every((folder: Folder) => folder.name.startsWith("Find Test Folder"))).toBe(true);
                 expect(response.body.data.every((folder: Folder) => folder.userId === userId)).toBe(true);
                 expect(response.body.data.every((folder: Folder) => !!folder.createdAt)).toBe(true);
                 expect(response.body.data.every((folder: Folder) => !!folder.updatedAt)).toBe(true);
@@ -280,7 +280,38 @@ describe(
 
                 expect(response.status).toBe(200);
                 expect(response.body).toHaveProperty("id", folderId);
-                expect(response.body).toHaveProperty("name", "Find All Folders Test Folder 3");
+                expect(response.body).toHaveProperty("name", "Find Test Folder 3");
+                expect(response.body).toHaveProperty("userId", userId);
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully update a folder",
+            async () => {
+                const folderId = 7;
+
+                const folderData = {
+                    name: "Updated Folder Test"
+                };
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .put(`${baseURL}/folder/update/${folderId}`)
+                    .send(folderData)
+                    .set("Authorization", `Bearer ${token}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id", folderId);
+                expect(response.body).toHaveProperty("name", folderData.name);
+                expect(response.body.name).not.toBe("Find Test Folder 7");
                 expect(response.body).toHaveProperty("userId", userId);
                 expect(response.body).toHaveProperty("createdAt");
                 expect(response.body).toHaveProperty("updatedAt");
