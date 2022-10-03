@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
     CreateFolderController,
     FindAllFoldersController,
-    FindOneFolderController
+    FindOneFolderController,
+    UpdateFolderController
 } from "@/controllers/folder";
 import {
     AuthenticationMiddleware,
@@ -33,6 +34,13 @@ folderRouter.get(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new FindOneFolderController().handle
+);
+
+folderRouter.put(
+    "/folder/update/:id",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new UpdateFolderController().handle
 );
 
 export { folderRouter };
