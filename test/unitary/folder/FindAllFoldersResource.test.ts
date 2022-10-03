@@ -33,6 +33,30 @@ describe(
                             userId: 1,
                             page: 1,
                             quantity: 10,
+                            orderColumn: "id",
+                            orderBy: "asc",
+                            search: "search-value"
+                        }
+                    )
+                )
+                    .resolves
+                    .not
+                    .toThrow();
+
+                expect(findAllFoldersRepositorySpy).toHaveBeenCalledTimes(1);
+                expect(countAllFoldersRepositorySpy).toHaveBeenCalledTimes(1);
+            }
+        );
+
+        it(
+            "Should successfully find all folders with the minimum required values",
+            async () => {
+                await expect(
+                    findAllFoldersResource.execute(
+                        {
+                            userId: 1,
+                            page: undefined,
+                            quantity: undefined,
                             orderColumn: undefined,
                             orderBy: "asc",
                             search: ""
@@ -57,9 +81,9 @@ describe(
                             userId: 3.1415,
                             page: 1,
                             quantity: 10,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
@@ -80,9 +104,9 @@ describe(
                             userId: -3,
                             page: 1,
                             quantity: 10,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
@@ -103,9 +127,9 @@ describe(
                             userId: 1,
                             page: 3.1415,
                             quantity: 10,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
@@ -126,9 +150,9 @@ describe(
                             userId: 1,
                             page: -3,
                             quantity: 10,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
@@ -149,9 +173,9 @@ describe(
                             userId: 1,
                             page: 1,
                             quantity: 3.1415,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
@@ -172,9 +196,9 @@ describe(
                             userId: 1,
                             page: 1,
                             quantity: -3,
-                            orderColumn: undefined,
+                            orderColumn: "id",
                             orderBy: "asc",
-                            search: ""
+                            search: "search-value"
                         }
                     )
                 )
