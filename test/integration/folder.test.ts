@@ -262,5 +262,30 @@ describe(
                 expect(response.body.data.every((folder: Folder) => !folder.deletedAt)).toBe(true);
             }
         );
+
+        it(
+            "Should successfully find one folder",
+            async () => {
+                const folderId = 3;
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .get(`${baseURL}/folder/get/${folderId}`)
+                    .set("Authorization", `Bearer ${token}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id", folderId);
+                expect(response.body).toHaveProperty("name", "Find All Folders Test Folder 3");
+                expect(response.body).toHaveProperty("userId", userId);
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
     }
 );
