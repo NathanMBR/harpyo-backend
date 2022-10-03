@@ -2,7 +2,7 @@ import { FolderInterface } from "@/interfaces";
 
 export namespace FindOneFolderContract {
     export interface Request {
-        id: string;
+        id: number;
     }
 
     export type Response = FolderInterface;
