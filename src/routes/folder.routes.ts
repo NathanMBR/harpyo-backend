@@ -45,7 +45,7 @@ folderRouter.put(
 );
 
 folderRouter.delete(
-    "/folder/delete/:id",
+    "/folder/inactivate/:id",
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new InactivateFolderController().handle
