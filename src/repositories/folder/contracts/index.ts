@@ -3,3 +3,4 @@ export * from "./FindAllFoldersContract";
 export * from "./CountAllFoldersContract";
 export * from "./FindOneFolderContract";
 export * from "./UpdateFolderContract";
+export * from "./InactivateFolderContract";
