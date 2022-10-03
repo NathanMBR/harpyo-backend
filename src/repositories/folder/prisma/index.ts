@@ -1,3 +1,4 @@
 export * from "./PrismaCreateFolderRepository";
 export * from "./PrismaFindAllFoldersRepository";
 export * from "./PrismaCountAllFoldersRepository";
+export * from "./PrismaFindOneFolderRepository";
