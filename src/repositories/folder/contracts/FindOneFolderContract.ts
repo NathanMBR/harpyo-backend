@@ -5,7 +5,7 @@ export namespace FindOneFolderContract {
         id: number;
     }
 
-    export type Response = FolderInterface;
+    export type Response = FolderInterface | null;
 }
 
 export interface FindOneFolderContract {
