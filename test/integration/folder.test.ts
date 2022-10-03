@@ -182,6 +182,15 @@ beforeAll(
                             }
                         ]
                     }
+                ),
+
+                prisma.folder.create(
+                    {
+                        data: {
+                            name: "Inactivate Folder Test",
+                            userId: 1
+                        }
+                    }
                 )
             ]
         );
@@ -316,6 +325,44 @@ describe(
                 expect(response.body).toHaveProperty("createdAt");
                 expect(response.body).toHaveProperty("updatedAt");
                 expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully inactivate a folder",
+            async () => {
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const folderId = 26;
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .delete(`${baseURL}/folder/inactivate/${folderId}`)
+                    .set("Authorization", `Bearer ${token}`);
+
+                const folderInDatabase = await prisma.folder.findFirst(
+                    {
+                        where: {
+                            id: folderId
+                        }
+                    }
+                );
+
+                expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
+                expect(folderInDatabase).toBeDefined();
+                expect(folderInDatabase).toHaveProperty("id", folderId);
+                expect(folderInDatabase).toHaveProperty("name", "Inactivate Folder Test");
+                expect(folderInDatabase).toHaveProperty("userId", userId);
+                expect(folderInDatabase).toHaveProperty("createdAt");
+                expect(folderInDatabase).toHaveProperty("updatedAt");
+                expect(folderInDatabase).toHaveProperty("deletedAt");
+                expect(folderInDatabase!.deletedAt).not.toBe(null);
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
     }
