@@ -4,7 +4,8 @@ import {
     CreateFolderController,
     FindAllFoldersController,
     FindOneFolderController,
-    UpdateFolderController
+    UpdateFolderController,
+    InactivateFolderController
 } from "@/controllers/folder";
 import {
     AuthenticationMiddleware,
@@ -41,6 +42,13 @@ folderRouter.put(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new UpdateFolderController().handle
+);
+
+folderRouter.delete(
+    "/folder/delete/:id",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new InactivateFolderController().handle
 );
 
 export { folderRouter };
