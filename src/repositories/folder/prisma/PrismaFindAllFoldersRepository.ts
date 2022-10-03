@@ -21,12 +21,14 @@ export class PrismaFindAllFoldersRepository implements FindAllFoldersContract {
             {
                 where: {
                     user: {
-                        id: data.userId
+                        id: data.userId,
+                        deletedAt: null
                     },
 
                     name: {
                         contains: data.search
-                    }
+                    },
+                    deletedAt: null
                 },
 
                 skip: data.skip,
