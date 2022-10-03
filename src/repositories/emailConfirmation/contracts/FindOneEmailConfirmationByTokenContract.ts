@@ -5,9 +5,9 @@ export namespace FindOneEmailConfirmationByTokenContract {
         token: string;
     }
 
-    export type Response = EmailConfirmationInterface;
+    export type Response = EmailConfirmationInterface | null;
 }
 
 export interface FindOneEmailConfirmationByTokenContract {
-    findOneByToken: (data: FindOneEmailConfirmationByTokenContract.Request) => Promise<FindOneEmailConfirmationByTokenContract.Response | null>;
+    findOneByToken: (data: FindOneEmailConfirmationByTokenContract.Request) => Promise<FindOneEmailConfirmationByTokenContract.Response>;
 }

@@ -5,9 +5,9 @@ export namespace ReadCurrentUserContract {
         id: number;
     }
 
-    export type Response = UserInterface;
+    export type Response = UserInterface | null;
 }
 
 export interface ReadCurrentUserContract {
-    readCurrent: (data: ReadCurrentUserContract.Request) => Promise<ReadCurrentUserContract.Response | null>;
+    readCurrent: (data: ReadCurrentUserContract.Request) => Promise<ReadCurrentUserContract.Response>;
 }

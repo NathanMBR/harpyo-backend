@@ -5,9 +5,9 @@ export namespace ReadOneUserByEmailContract {
         email: string;
     }
 
-    export type Response = UserInterface;
+    export type Response = UserInterface | null;
 }
 
 export interface ReadOneUserByEmailContract {
-    readOneByEmail: (data: ReadOneUserByEmailContract.Request) => Promise<ReadOneUserByEmailContract.Response | null>;
+    readOneByEmail: (data: ReadOneUserByEmailContract.Request) => Promise<ReadOneUserByEmailContract.Response>;
 }

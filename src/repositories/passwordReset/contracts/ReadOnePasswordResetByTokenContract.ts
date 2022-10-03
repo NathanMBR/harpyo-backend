@@ -5,9 +5,9 @@ export namespace ReadOnePasswordResetByTokenContract {
         token: string;
     }
 
-    export type Response = PasswordResetInterface;
+    export type Response = PasswordResetInterface | null;
 }
 
 export interface ReadOnePasswordResetByTokenContract {
-    findOneByToken: (data: ReadOnePasswordResetByTokenContract.Request) => Promise<ReadOnePasswordResetByTokenContract.Response | null>;
+    findOneByToken: (data: ReadOnePasswordResetByTokenContract.Request) => Promise<ReadOnePasswordResetByTokenContract.Response>;
 }
