@@ -7,12 +7,15 @@ export class PrismaCountAllFoldersRepository implements CountAllFoldersContract 
             {
                 where: {
                     user: {
-                        id: data.userId
+                        id: data.userId,
+                        deletedAt: null
                     },
 
                     name: {
                         contains: data.search
-                    }
+                    },
+
+                    deletedAt: null
                 }
             }
         );
