@@ -38,13 +38,13 @@ beforeAll(
                     {
                         data: {
                             name: "Folder Test User",
-                            email: "folder.user@test.com",
+                            email: authenticationData.email,
                             password,
                             confirmedAt,
 
                             emailConfirmations: {
                                 create: {
-                                    email: "folder.user@test.com",
+                                    email: authenticationData.email,
                                     confirmedAt
                                 }
                             }
