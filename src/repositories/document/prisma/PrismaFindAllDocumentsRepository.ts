@@ -39,6 +39,7 @@ export class PrismaFindAllDocumentsRepository implements FindAllDocumentsContrac
                         }
                     ],
 
+                    folderId: data.folderId,
                     deletedAt: null
                 },
 
