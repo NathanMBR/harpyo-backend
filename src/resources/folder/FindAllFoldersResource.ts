@@ -39,8 +39,8 @@ export class FindAllFoldersResource {
                 userId,
                 skip,
                 take,
-                orderColumn: orderColumn as FindAllFoldersContract.Request["orderColumn"],
-                orderBy: orderBy as FindAllFoldersContract.Request["orderBy"],
+                orderColumn: orderColumn,
+                orderBy: orderBy,
                 search
             }
         );
