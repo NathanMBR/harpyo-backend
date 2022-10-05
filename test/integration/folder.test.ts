@@ -15,6 +15,7 @@ import { hash } from "bcryptjs";
 
 import { app } from "@/server";
 import { baseURL } from "@test/settings";
+import { FolderInterface } from "@/interfaces";
 
 const prisma = new PrismaClient();
 const request = supertest(app);
@@ -237,15 +238,6 @@ describe(
         it(
             "Should successfully find all folders",
             async () => {
-                interface Folder {
-                    id: number;
-                    name: string;
-                    userId: number;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    deletedAt: Date | null;
-                }
-
                 const authenticationResponse = await request
                     .post(`${baseURL}/user/authenticate`)
                     .send(authenticationData);
@@ -263,12 +255,12 @@ describe(
                 expect(response.body).toHaveProperty("lastPage", 5);
                 expect(response.body).toHaveProperty("data");
                 expect(response.body.data).toHaveLength(6);
-                expect(response.body.data.every((folder: Folder) => !!folder.id)).toBe(true);
-                expect(response.body.data.every((folder: Folder) => folder.name.startsWith("Find Test Folder"))).toBe(true);
-                expect(response.body.data.every((folder: Folder) => folder.userId === userId)).toBe(true);
-                expect(response.body.data.every((folder: Folder) => !!folder.createdAt)).toBe(true);
-                expect(response.body.data.every((folder: Folder) => !!folder.updatedAt)).toBe(true);
-                expect(response.body.data.every((folder: Folder) => !folder.deletedAt)).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => !!folder.id)).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => folder.name.startsWith("Find Test Folder"))).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => folder.userId === userId)).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => !!folder.createdAt)).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => !!folder.updatedAt)).toBe(true);
+                expect(response.body.data.every((folder: FolderInterface) => !folder.deletedAt)).toBe(true);
             }
         );
 
