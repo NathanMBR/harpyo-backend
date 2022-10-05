@@ -2,7 +2,8 @@ import { Router } from "express";
 
 import {
     CreateDocumentController,
-    FindAllDocumentsController
+    FindAllDocumentsController,
+    FindOneDocumentController
 } from "@/controllers/document";
 import {
     AuthenticationMiddleware,
@@ -25,6 +26,13 @@ documentRouter.get(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new FindAllDocumentsController().handle
+);
+
+documentRouter.get(
+    "/document/get/:id",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new FindOneDocumentController().handle
 );
 
 export { documentRouter };
