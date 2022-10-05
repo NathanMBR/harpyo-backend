@@ -25,6 +25,7 @@ export class PrismaCountAllDocumentsRepository implements CountAllDocumentsContr
                         }
                     ],
 
+                    folderId: data.folderId,
                     deletedAt: null
                 }
             }
