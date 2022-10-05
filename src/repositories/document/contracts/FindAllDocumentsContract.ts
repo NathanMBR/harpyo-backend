@@ -3,6 +3,7 @@ import { DocumentInterface } from "@/interfaces";
 export namespace FindAllDocumentsContract {
     export interface Request {
         userId: number;
+        folderId?: number | null;
         skip: number;
         take: number;
         orderColumn?: "id" | "updatedAt";
