@@ -25,19 +25,9 @@ export class PrismaFindAllDocumentsRepository implements FindAllDocumentsContrac
                         deletedAt: null
                     },
 
-                    OR: [
-                        {
-                            title: {
-                                contains: data.search
-                            }
-                        },
-
-                        {
-                            text: {
-                                contains: data.search
-                            }
-                        }
-                    ],
+                    title: {
+                        contains: data.search
+                    },
 
                     folderId: data.folderId,
                     deletedAt: null
