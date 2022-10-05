@@ -15,6 +15,7 @@ import { hash } from "bcryptjs";
 
 import { app } from "@/server";
 import { baseURL } from "@test/settings";
+import { DocumentInterface } from "@/interfaces";
 
 const prisma = new PrismaClient();
 const request = supertest(app);
@@ -58,6 +59,213 @@ beforeAll(
                             name: "Document Test Folder",
                             userId: 1
                         }
+                    }
+                ),
+
+                prisma.document.createMany(
+                    {
+                        skipDuplicates: false,
+                        data: [
+                            {
+                                title: "Find Test Document 1",
+                                text: "Lorem Ipsum 1",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 2",
+                                text: "Lorem Ipsum 2",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 3",
+                                text: "Lorem Ipsum 3",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 4",
+                                text: "Lorem Ipsum 4",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 5",
+                                text: "Lorem Ipsum 5",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 6",
+                                text: "Lorem Ipsum 6",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 7",
+                                text: "Lorem Ipsum 7",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 8",
+                                text: "Lorem Ipsum 8",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 9",
+                                text: "Lorem Ipsum 9",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 10",
+                                text: "Lorem Ipsum 10",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 11",
+                                text: "Lorem Ipsum 11",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 12",
+                                text: "Lorem Ipsum 12",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 13",
+                                text: "Lorem Ipsum 13",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 14",
+                                text: "Lorem Ipsum 14",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 15",
+                                text: "Lorem Ipsum 15",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 16",
+                                text: "Lorem Ipsum 16",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 17",
+                                text: "Lorem Ipsum 17",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 18",
+                                text: "Lorem Ipsum 18",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 19",
+                                text: "Lorem Ipsum 19",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 20",
+                                text: "Lorem Ipsum 20",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 21",
+                                text: "Lorem Ipsum 21",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 22",
+                                text: "Lorem Ipsum 22",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 23",
+                                text: "Lorem Ipsum 23",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 24",
+                                text: "Lorem Ipsum 24",
+                                userId: 1,
+                                folderId: null,
+                                isEncrypted: false
+                            },
+
+                            {
+                                title: "Find Test Document 25",
+                                text: "Lorem Ipsum 25",
+                                userId: 1,
+                                folderId: 1,
+                                isEncrypted: false
+                            }
+                        ]
                     }
                 )
             ]
@@ -105,6 +313,39 @@ describe(
                 expect(response.body).toHaveProperty("createdAt");
                 expect(response.body).toHaveProperty("updatedAt");
                 expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully list all documents",
+            async () => {
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .get(`${baseURL}/document/all?search=Test Document&orderColumn=id&orderBy=desc&page=2&quantity=6`)
+                    .set("Authorization", `Bearer ${token}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("quantityPerPage", 6);
+                expect(response.body).toHaveProperty("totalQuantity", 25);
+                expect(response.body).toHaveProperty("currentPage", 2);
+                expect(response.body).toHaveProperty("lastPage", 5);
+                expect(response.body).toHaveProperty("data");
+                expect(Array.isArray(response.body.data)).toBe(true);
+                expect(response.body.data).toHaveLength(6);
+                expect(response.body.data.every((document: DocumentInterface) => !!document.id)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => document.title.startsWith("Find Test Document"))).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => document.text?.startsWith("Lorem Ipsum"))).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => document.userId === userId)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => document.folderId === 1 || document.folderId === null)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => document.isEncrypted === false)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => !!document.createdAt)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => !!document.updatedAt)).toBe(true);
+                expect(response.body.data.every((document: DocumentInterface) => !document.deletedAt)).toBe(true);
             }
         );
     }
