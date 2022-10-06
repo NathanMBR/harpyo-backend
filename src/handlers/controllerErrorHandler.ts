@@ -5,6 +5,9 @@ import {
     JsonWebTokenError,
     NotBeforeError
 } from "jsonwebtoken";
+import pino from "pino";
+
+const logger = pino();
 
 import { HttpError } from "@/errors";
 
@@ -53,7 +56,7 @@ export const controllerErrorHandler = (
             }
         );
 
-    console.log(error instanceof HttpError ? error.message : error instanceof Error ? error.stack : error);
+    logger.error(error instanceof Error ? error.stack : error);
     return response.status(500).json(
         {
             error: "Internal server error",
