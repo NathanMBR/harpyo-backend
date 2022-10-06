@@ -3,7 +3,8 @@ import { Router } from "express";
 import {
     CreateDocumentController,
     FindAllDocumentsController,
-    FindOneDocumentController
+    FindOneDocumentController,
+    UpdateDocumentController
 } from "@/controllers/document";
 import {
     AuthenticationMiddleware,
@@ -33,6 +34,13 @@ documentRouter.get(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new FindOneDocumentController().handle
+);
+
+documentRouter.put(
+    "/document/update/:id",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new UpdateDocumentController().handle
 );
 
 export { documentRouter };
