@@ -1,5 +1,8 @@
 import { prisma } from "./connection";
 import { hash } from "bcryptjs";
+import pino from "pino";
+
+const logger = pino();
 
 const runDevelopmentSeeds = async () => {
     const email = "john.doe@test.com";
@@ -31,7 +34,6 @@ const runDevelopmentSeeds = async () => {
     );
 };
 
-/* eslint-disable no-console */
 runDevelopmentSeeds()
     .then(
         () => {
@@ -40,9 +42,8 @@ runDevelopmentSeeds()
     )
     .catch(
         error => {
-            console.error(error);
+            logger.error(error);
             process.exitCode = 1;
         }
     )
     .finally(process.exit);
-/* eslint-enable no-console */
