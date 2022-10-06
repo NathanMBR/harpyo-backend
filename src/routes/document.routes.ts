@@ -4,7 +4,8 @@ import {
     CreateDocumentController,
     FindAllDocumentsController,
     FindOneDocumentController,
-    UpdateDocumentController
+    UpdateDocumentController,
+    InactivateDocumentController
 } from "@/controllers/document";
 import {
     AuthenticationMiddleware,
@@ -41,6 +42,13 @@ documentRouter.put(
     authenticationMiddleware,
     confirmedAccountMiddleware,
     new UpdateDocumentController().handle
+);
+
+documentRouter.delete(
+    "/document/inactivate/:id",
+    authenticationMiddleware,
+    confirmedAccountMiddleware,
+    new InactivateDocumentController().handle
 );
 
 export { documentRouter };
