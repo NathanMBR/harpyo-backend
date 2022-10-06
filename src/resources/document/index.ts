@@ -4,3 +4,4 @@ export * from "./CreateDocumentResource";
 export * from "./FindAllDocumentsResource";
 export * from "./FindOneDocumentResource";
 export * from "./UpdateDocumentResource";
+export * from "./InactivateDocumentResource";
