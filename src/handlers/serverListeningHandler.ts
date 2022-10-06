@@ -1,10 +1,12 @@
-/* eslint-disable no-console */
+import pino from "pino";
+
+const logger = pino();
+
 export const serverListeningHandler = (
     port: number,
     environment: string
 ) => () => {
-    console.log("Server online!");
-    console.log(`Port: ${port}`);
-    console.log(`Environment: ${environment}`);
+    logger.info("Server online!");
+    logger.info(`Port: ${port}`);
+    logger.info(`Environment: ${environment}`);
 };
-/* eslint-enable no-console */
