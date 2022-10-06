@@ -1,15 +1,19 @@
 import { Server } from "http";
+import pino from "pino";
+
 import { prisma } from "@/database/prisma";
 
+const logger = pino();
+
 export const serverShutdownHandler = (server: Server) => (signal: NodeJS.Signals) => {
-    console.log(`Shutdown signal received: ${signal}`);
-    console.log("Shutting down server...");
+    logger.info(`Shutdown signal received: ${signal}`);
+    logger.info("Shutting down server...");
 
     prisma.$disconnect()
-        .catch(console.error)
+        .catch(logger.error)
         .finally(
             () => server.close(
-                () => console.log("Server successfully shut down.")
+                () => logger.info("Server successfully shut down.")
             )
         );
 };
