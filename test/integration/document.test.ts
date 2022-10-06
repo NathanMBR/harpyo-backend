@@ -348,5 +348,33 @@ describe(
                 expect(response.body.data.every((document: DocumentInterface) => !document.deletedAt)).toBe(true);
             }
         );
+
+        it(
+            "Should successfully find one document",
+            async () => {
+                const folderId = 3;
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .get(`${baseURL}/document/get/${folderId}`)
+                    .set("Authorization", `Bearer ${token}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id", folderId);
+                expect(response.body).toHaveProperty("title", "Find Test Document 3");
+                expect(response.body).toHaveProperty("text", "Lorem Ipsum 3");
+                expect(response.body).toHaveProperty("userId", userId);
+                expect(response.body).toHaveProperty("folderId", 1);
+                expect(response.body).toHaveProperty("isEncrypted", false);
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
     }
 );
