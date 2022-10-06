@@ -267,6 +267,18 @@ beforeAll(
                             }
                         ]
                     }
+                ),
+
+                prisma.document.create(
+                    {
+                        data: {
+                            title: "Inactivate Document Test",
+                            text: "Lorem Ipsum",
+                            userId: 1,
+                            folderId: null,
+                            isEncrypted: false
+                        }
+                    }
                 )
             ]
         );
@@ -410,6 +422,47 @@ describe(
                 expect(response.body).toHaveProperty("createdAt");
                 expect(response.body).toHaveProperty("updatedAt");
                 expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
+
+        it(
+            "Should successfully inactivate a document",
+            async () => {
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
+                const documentId = 26;
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .delete(`${baseURL}/document/inactivate/${documentId}`)
+                    .set("Authorization", `Bearer ${token}`);
+
+                const documentInDatabase = await prisma.document.findFirst(
+                    {
+                        where: {
+                            id: documentId
+                        }
+                    }
+                );
+
+                expect(response.status).toBe(204);
+                expect(response.body).toStrictEqual({});
+                expect(documentInDatabase).toBeDefined();
+                expect(documentInDatabase).toHaveProperty("id", documentId);
+                expect(documentInDatabase).toHaveProperty("title", "Inactivate Document Test");
+                expect(documentInDatabase).toHaveProperty("text", "Lorem Ipsum");
+                expect(documentInDatabase).toHaveProperty("userId", userId);
+                expect(documentInDatabase).toHaveProperty("folderId", null);
+                expect(documentInDatabase).toHaveProperty("isEncrypted", false);
+                expect(documentInDatabase).toHaveProperty("createdAt");
+                expect(documentInDatabase).toHaveProperty("updatedAt");
+                expect(documentInDatabase).toHaveProperty("deletedAt");
+                expect(documentInDatabase!.deletedAt).not.toBeNull();
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
     }
