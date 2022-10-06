@@ -376,5 +376,41 @@ describe(
                 expect(response.body).toHaveProperty("deletedAt", null);
             }
         );
+
+        it(
+            "Should successfully update a document",
+            async () => {
+                const documentId = 7;
+
+                const documentData = {
+                    title: "Update Document Test",
+                    text: "Lorem ipsum",
+                    folderId: 1,
+                    isEncrypted: true
+                };
+
+                const authenticationResponse = await request
+                    .post(`${baseURL}/user/authenticate`)
+                    .send(authenticationData);
+
+                const { id: userId } = authenticationResponse.body.user;
+                const { token } = authenticationResponse.body;
+                const response = await request
+                    .put(`${baseURL}/document/update/${documentId}`)
+                    .send(documentData)
+                    .set("Authorization", `Bearer ${token}`);
+
+                expect(response.status).toBe(200);
+                expect(response.body).toHaveProperty("id", documentId);
+                expect(response.body).toHaveProperty("title", documentData.title);
+                expect(response.body).toHaveProperty("text", documentData.text);
+                expect(response.body).toHaveProperty("userId", userId);
+                expect(response.body).toHaveProperty("folderId", documentData.folderId);
+                expect(response.body).toHaveProperty("isEncrypted", documentData.isEncrypted);
+                expect(response.body).toHaveProperty("createdAt");
+                expect(response.body).toHaveProperty("updatedAt");
+                expect(response.body).toHaveProperty("deletedAt", null);
+            }
+        );
     }
 );
