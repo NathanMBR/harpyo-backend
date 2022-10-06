@@ -353,7 +353,7 @@ describe(
                 expect(folderInDatabase).toHaveProperty("createdAt");
                 expect(folderInDatabase).toHaveProperty("updatedAt");
                 expect(folderInDatabase).toHaveProperty("deletedAt");
-                expect(folderInDatabase!.deletedAt).not.toBe(null);
+                expect(folderInDatabase!.deletedAt).not.toBeNull();
                 /* eslint-enable @typescript-eslint/no-non-null-assertion */
             }
         );
